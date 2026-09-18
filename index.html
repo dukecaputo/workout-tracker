@@ -809,7 +809,7 @@
       setDetails: {},          // key: `${workoutKey}_${ex.id}_set_${s}` -> { weight: "45", reps: 10, completed: true }
       completedWarmup: {},     // key: `${workoutKey}_w_${item.id}`: true
       supplementLogs: {},
-      googleSheetUrl: "",
+      googleSheetUrl: "https://script.google.com/macros/s/AKfycbzI_Z6ShhvDS9PlG8rQ7JcFi7BUUFI66fp_hj58ln0DdiDdDrZCG8T0PvukdVanNUCv/exec",
       suppStreak: 1
     };
 
@@ -818,6 +818,9 @@
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           state = { ...state, ...JSON.parse(saved) };
+        }
+        if (!state.googleSheetUrl) {
+          state.googleSheetUrl = "https://script.google.com/macros/s/AKfycbzI_Z6ShhvDS9PlG8rQ7JcFi7BUUFI66fp_hj58ln0DdiDdDrZCG8T0PvukdVanNUCv/exec";
         }
       } catch (e) {
         console.error("Failed to load state", e);
