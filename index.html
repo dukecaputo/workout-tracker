@@ -134,6 +134,20 @@
 
       <!-- Month & Week & Day Picker Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <!-- Program Track Switcher (LBA vs Original) -->
+        <div class="flex items-center justify-between pb-2.5 border-b border-slate-800/80">
+          <div class="flex items-center space-x-1.5">
+            <span class="text-[11px] font-semibold text-slate-400">Track:</span>
+            <span id="trackNameBadge" class="text-[11px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/50">
+              Low Back Ability Hybrid
+            </span>
+          </div>
+          <button onclick="toggleProgramTrack()" class="text-[11px] font-bold text-slate-300 hover:text-white bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 hover:border-emerald-500 transition-all flex items-center space-x-1">
+            <i data-lucide="repeat" class="w-3 h-3 text-emerald-400"></i>
+            <span id="toggleTrackBtnText">Switch to Original</span>
+          </button>
+        </div>
+
         <!-- Month Selector Pills -->
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Phase / Month</span>
@@ -548,7 +562,7 @@
       ]
     };
 
-    const MONTHS_DATA = {
+    const MONTHS_DATA_STANDARD = {
       1: {
         title: "Month 1: Re-Conditioning & TPI Base",
         theme: "Anatomical Adaptation",
@@ -754,6 +768,229 @@
       }
     };
 
+    // ==========================================
+    // 1B. LOW BACK ABILITY (LBA) HYBRID PROGRAM
+    // ==========================================
+    const MONTHS_DATA_LBA = {
+      1: {
+        title: "Month 1: Re-Conditioning & Low Back Ability Base",
+        theme: "Anatomical Adaptation & Lumbar Bulletproofing",
+        desc: "Decompressing the spine, restoring hip & thoracic mobility, and strengthening the QL and lumbar erectors.",
+        days: {
+          1: {
+            title: "Lower Body & Low Back Ability Foundation",
+            duration: "45–50 min",
+            focus: "Ground force, pelvic dissociation & lumbar resilience",
+            exercises: [
+              { id: "lba1_1", name: "Goblet Squat (or ATG Box Squat)", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Knees track over toes, upright torso, full depth.", videoQuery: "goblet squat proper form tutorial" },
+              { id: "lba1_2", name: "Low Back Ability: Seated Good Morning", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench wide stance. Hinge deep at hips with tall spine, stretching adductors and strengthening lower back.", videoQuery: "seated good morning low back ability form brendan backstrom" },
+              { id: "lba1_3", name: "Low Back Ability: Dumbbell QL Raise", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Standing side bend or on 45° bench. Lateral flexion of lumbar spine to bulletproof QL against swing spasms.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "lba1_4", name: "Low Back Ability: Jefferson Curl (Light DB)", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "4-1-1-0", cue: "Tuck chin, roll down one vertebra at a time with light weight. Lengthens hamstrings and strengthens spinal flexion.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "lba1_5", name: "Farmer's Walk (DBs or Kettlebells)", sets: 3, reps: "40 paces", targetReps: 40, unit: "paces", isStrength: true, tempo: "Smooth", cue: "Shoulders packed back, tall spine, firm grip.", videoQuery: "farmers walk exercise proper form" }
+            ]
+          },
+          2: {
+            title: "Zone 2 Engine & LBA Sciatic Flossing",
+            duration: "45–55 min",
+            focus: "Mitochondrial biogenesis & posterior chain nerve flossing",
+            exercises: [
+              { id: "lba1_2_1", name: "Zone 2 Steady-State Cardio", sets: 1, reps: "40–45 min", targetReps: 45, unit: "mins", isStrength: false, tempo: "Conversational", cue: "Incline treadmill walk (12% @ 2.8-3.2mph) or stationary bike. Nasal breathing.", videoQuery: "peter attia zone 2 cardio guide" },
+              { id: "lba1_2_2", name: "Low Back Ability: Elephant Walk", sets: 3, reps: "30 reps", targetReps: 30, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on floor or elevated box. Alternating knee pumps flossing sciatic nerve and releasing tight lumbar fascia.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "lba1_2_3", name: "Low Back Ability: Couch Stretch", sets: 3, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Sustained", cue: "Back knee against wall. Opens tight psoas to eliminate anterior pelvic pull on lower back.", videoQuery: "couch stretch knees over toes guy form" },
+              { id: "lba1_2_4", name: "Quadruped Thread-the-Needle", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: false, tempo: "2s pause", cue: "Rotate thoracic spine while locking hips square.", videoQuery: "quadruped thread the needle thoracic mobility" }
+            ]
+          },
+          3: {
+            title: "Upper Body & LBA Spinal Erector Control",
+            duration: "45–50 min",
+            focus: "Scapular control, lat width & golf swing whip",
+            exercises: [
+              { id: "lba1_3_1", name: "Dumbbell Flat/Incline Bench Press", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Elbows at 45° angle, full chest contraction.", videoQuery: "dumbbell bench press proper form" },
+              { id: "lba1_3_2", name: "Single-Arm Dumbbell Row", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Pull dumbbell toward hip pocket, pause at top.", videoQuery: "single arm dumbbell row proper form" },
+              { id: "lba1_3_3", name: "Low Back Ability: 45° Back Extension (or Floor Superman)", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Segmented curl and uncurl of spinal erectors and glutes, pause at top.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "lba1_3_4", name: "Half-Kneeling Pallof Press (Band/Cable)", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2s hold", cue: "Resist the rotational pull; brace core like taking a punch.", videoQuery: "half kneeling pallof press form" },
+              { id: "lba1_3_5", name: "Face Pulls with External Rotation", sets: 3, reps: "12–15 reps", targetReps: 15, isStrength: true, tempo: "2-1-1-0", cue: "Pull band/rope to forehead, elbows high, thumbs back.", videoQuery: "face pulls with external rotation athlean x" }
+            ]
+          },
+          4: {
+            title: "LBA Bulletproof Spine & Pelvic Restoration (Optional)",
+            duration: "40–45 min",
+            focus: "Spinal decompression, adductor length & lead-hip mobility",
+            exercises: [
+              { id: "lba1_4_1", name: "Low Back Ability: Seated Good Morning", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Slow", cue: "Deep adductor stretch and loaded lumbar extension.", videoQuery: "seated good morning low back ability form" },
+              { id: "lba1_4_2", name: "Low Back Ability: Dumbbell QL Side Bends", sets: 3, reps: "12 reps/side", targetReps: 12, isStrength: true, tempo: "Strict", cue: "Lateral flexion and extension of the lower spine.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "lba1_4_3", name: "Low Back Ability: Jefferson Curl", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "4s down", cue: "Light weight, spinal rolling flexion.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "lba1_4_4", name: "Low Back Ability: ATG Split Squat", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "3-0-1-0", cue: "Full depth, stretches trailing hip flexor while strengthening lead leg.", videoQuery: "atg split squat proper form knees over toes" },
+              { id: "lba1_4_5", name: "Outdoor Zone 2 Ruck or Incline Walk", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Sunshine, fresh air, active recovery.", videoQuery: "zone 2 walking rucking benefits" }
+            ]
+          }
+        }
+      },
+      2: {
+        title: "Month 2: Build & LBA Progressive Overload",
+        theme: "Hypertrophy & Lumbar Resilience",
+        desc: "Increasing load on Seated Good Mornings and QL raises, introducing VO2 surges with protected spine.",
+        days: {
+          1: {
+            title: "Lower Body & Glute Power Base (LBA Hybrid)",
+            duration: "45–55 min",
+            focus: "Posterior chain drive & lateral lumbar strength",
+            exercises: [
+              { id: "lba2_1", name: "Trap Bar Deadlift (or Heavy DB Deadlift)", sets: 4, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Drive feet through floor, squeeze glutes at lockout.", videoQuery: "trap bar deadlift form tutorial" },
+              { id: "lba2_2", name: "Low Back Ability: Loaded Seated Good Morning", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Add light dumbbell load; full hip hinge depth.", videoQuery: "seated good morning low back ability form brendan backstrom" },
+              { id: "lba2_3", name: "Low Back Ability: QL Raise (45° Bench or DB)", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Elevate ribcage laterally from bottom stretch.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "lba2_4", name: "Single-Leg Hip Thrusts", sets: 3, reps: "10 reps/leg", targetReps: 10, isStrength: true, tempo: "2s hold", cue: "Crucial for lead-hip extension in golf downswing.", videoQuery: "single leg hip thrust form" },
+              { id: "lba2_5", name: "Suitcase Carry (Heavy DB)", sets: 3, reps: "35 paces/side", targetReps: 35, unit: "paces", isStrength: true, tempo: "Braced", cue: "Maximum anti-lateral flexion core activation.", videoQuery: "heavy suitcase carry proper form" }
+            ]
+          },
+          2: {
+            title: "Zone 2 + Norwegian Surges & Sciatic Floss",
+            duration: "50 min",
+            focus: "Mitochondrial capacity + LBA nerve flossing",
+            exercises: [
+              { id: "lba2_2_1", name: "Zone 2 Steady State (Bike/Rower/Treadmill)", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Steady", cue: "Keep heart rate strictly in Zone 2 (talking pace).", videoQuery: "how to do zone 2 cardio properly" },
+              { id: "lba2_2_2", name: "Introductory VO2 Max Surges", sets: 4, reps: "60s hard / 90s easy", targetReps: 4, unit: "rounds", isStrength: false, tempo: "RPE 8.5", cue: "60s sprint effort (>85% HR) followed by 90s easy recovery spin.", videoQuery: "vo2 max sprint interval training" },
+              { id: "lba2_2_3", name: "Low Back Ability: Elephant Walk", sets: 3, reps: "35 reps", targetReps: 35, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Alternating knee extensions flossing sciatic nerve.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "lba2_2_4", name: "Low Back Ability: Couch Stretch", sets: 3, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Static", cue: "Open hip flexor to alleviate lumbar arch.", videoQuery: "couch stretch knees over toes guy form" }
+            ]
+          },
+          3: {
+            title: "Upper Body Pull/Push & LBA Back Extensions",
+            duration: "45–55 min",
+            focus: "Lats, rotator cuff & posterior endurance",
+            exercises: [
+              { id: "lba2_3_1", name: "Overhead Dumbbell / Landmine Press", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Core locked tight, press overhead without arching lower back.", videoQuery: "standing dumbbell overhead press form" },
+              { id: "lba2_3_2", name: "Lat Pulldown or Neutral Grip Pull-Ups", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Lats are the primary braking/acceleration muscle in swing.", videoQuery: "lat pulldown proper form cues" },
+              { id: "lba2_3_3", name: "Low Back Ability: 45° Back Extension (Weighted)", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Hold light plate/DB at chest, curl & uncurl.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "lba2_3_4", name: "Incline DB Chest Press", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-0-1-0", cue: "Full stretch at bottom, squeeze chest at top.", videoQuery: "incline dumbbell bench press form" },
+              { id: "lba2_3_5", name: "Bottoms-Up Kettlebell Carry", sets: 3, reps: "30s/side", targetReps: 30, unit: "sec", isStrength: true, tempo: "Firm", cue: "Forearm stability to prevent golfer's elbow.", videoQuery: "bottoms up kettlebell carry form" }
+            ]
+          },
+          4: {
+            title: "Golf Agility & LBA Lumbar Recovery (Optional)",
+            duration: "40–45 min",
+            focus: "Lateral bounds, med ball tosses & LBA resets",
+            exercises: [
+              { id: "lba2_4_1", name: "Medicine Ball Chest Passes (Wall)", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Explosive", cue: "Push explosively through palms into concrete wall.", videoQuery: "explosive medicine ball chest pass against wall" },
+              { id: "lba2_4_2", name: "Low Back Ability: Jefferson Curl", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Slow vertebrae articulation.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "lba2_4_3", name: "Low Back Ability: Seated Good Morning", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Smooth", cue: "Wide stance hip hinge.", videoQuery: "seated good morning low back ability form" },
+              { id: "lba2_4_4", name: "Zone 2 Incline Walk / Light Jog", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Easy aerobic active recovery.", videoQuery: "zone 2 heart rate training" }
+            ]
+          }
+        }
+      },
+      3: {
+        title: "Month 3: Power & Peak VO2 Max (LBA Protected)",
+        theme: "Rate of Force Development & Lumbar Security",
+        desc: "Explosive hip snaps and Norwegian 4x4 intervals with reinforced lower back stability.",
+        days: {
+          1: {
+            title: "Explosive Posterior Chain & LBA Hinge Drive",
+            duration: "45–55 min",
+            focus: "Hip snap velocity, Seated Good Mornings & heavy carries",
+            exercises: [
+              { id: "lba3_1", name: "Kettlebell Swings (Hardstyle)", sets: 4, reps: "12 reps", targetReps: 12, isStrength: true, tempo: "Explosive", cue: "Sharp hip snap, float kettlebell to chest height, brace glutes.", videoQuery: "kettlebell swing hardstyle proper form" },
+              { id: "lba3_2", name: "Low Back Ability: Seated Good Morning (Moderate Load)", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Drive up through adductors and spinal erectors.", videoQuery: "seated good morning low back ability form" },
+              { id: "lba3_3", name: "Low Back Ability: Dumbbell QL Raise", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Strengthen lateral core to handle high rotational speed.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "lba3_4", name: "Rotational Med Ball Slams / Wall Throws", sets: 4, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Max Intent", cue: "Transfer energy from back hip through torso into wall.", videoQuery: "rotational medicine ball scoop toss wall golf" },
+              { id: "lba3_5", name: "Heavy Farmer's Walk", sets: 4, reps: "30 paces", targetReps: 30, unit: "paces", isStrength: true, tempo: "Heavy", cue: "Maximum grip load, tall posture, steady breath.", videoQuery: "heavy farmers carry form cues" }
+            ]
+          },
+          2: {
+            title: "The Longevity VO2 Max Peak (Norwegian 4×4) + LBA Floss",
+            duration: "45–50 min",
+            focus: "Stroke volume & sciatic nerve maintenance",
+            exercises: [
+              { id: "lba3_2_1", name: "Warm-Up (Easy Spin / Jog)", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Gradual ramp", cue: "Gradually raise heart rate to top of Zone 2.", videoQuery: "how to warm up for vo2 max intervals" },
+              { id: "lba3_2_2", name: "Norwegian 4×4 Protocol (Attia/Patrick)", sets: 4, reps: "4m Work / 3m Rest", targetReps: 4, unit: "intervals", isStrength: false, tempo: "RPE 9.0", cue: "4 min @ 90-95% Max HR, followed by 3 min easy Zone 1 recovery walk. Repeat 4 total times.", videoQuery: "norwegian 4x4 interval training peter attia" },
+              { id: "lba3_2_3", name: "Low Back Ability: Elephant Walk", sets: 3, reps: "40 reps", targetReps: 40, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Floss nervous system after intense intervals.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "lba3_2_4", name: "Low Back Ability: Couch Stretch", sets: 2, reps: "90s/side", targetReps: 90, unit: "sec", isStrength: false, tempo: "Static", cue: "Deep psoas decompression.", videoQuery: "couch stretch knees over toes guy form" }
+            ]
+          },
+          3: {
+            title: "Upper Body Power & LBA Back Extensions",
+            duration: "45–55 min",
+            focus: "Torso whip, lateral stabilization & pressing power",
+            exercises: [
+              { id: "lba3_3_1", name: "Barbell / Heavy DB Incline Bench", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-1-1-0", cue: "Heavy controlled lower, explosive press.", videoQuery: "incline dumbbell bench press heavy form" },
+              { id: "lba3_3_2", name: "Low Back Ability: 45° Back Extension (Weighted)", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Spinal erector power, full control at lockout.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "lba3_3_3", name: "Single-Arm Cable Row w/ Torso Rotation", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Dynamic", cue: "Rotate torso slightly into row to mimic follow-through.", videoQuery: "single arm rotational cable row form" },
+              { id: "lba3_3_4", name: "Skater Jumps (Lateral Bound to Stick)", sets: 3, reps: "5 jumps/side", targetReps: 5, isStrength: false, tempo: "Explosive", cue: "Jump laterally and freeze on lead foot for 2 seconds.", videoQuery: "lateral skater jumps with stick landing form" },
+              { id: "lba3_3_5", name: "Hanging Knee Raises / Decompression", sets: 3, reps: "10 reps", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Spine decompression with active core tuck.", videoQuery: "hanging knee raises proper form" }
+            ]
+          },
+          4: {
+            title: "Extended Aerobic Flush & LBA Reset (Optional)",
+            duration: "50–60 min",
+            focus: "Endurance foundation & lumbar recovery",
+            exercises: [
+              { id: "lba3_4_1", name: "60-Min Zone 2 Trail Run or Incline Ruck", sets: 1, reps: "50–60 min", targetReps: 60, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Steady, rhythmic aerobic conditioning.", videoQuery: "zone 2 rucking benefits" },
+              { id: "lba3_4_2", name: "Low Back Ability: Jefferson Curl", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Slow spinal rolling flexion.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "lba3_4_3", name: "Low Back Ability: Seated Good Morning", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Smooth", cue: "Groin and lumbar stretch.", videoQuery: "seated good morning low back ability form" }
+            ]
+          }
+        }
+      },
+      4: {
+        title: "Month 4: Speed & Peak Integration (LBA Dynamic)",
+        theme: "Rotational Speed & Lumbar Bulletproofing",
+        desc: "Converting structural strength into maximum rotational whip while keeping the lower back 100% pain-free.",
+        days: {
+          1: {
+            title: "Contrast Ground Power & LBA QL Lock",
+            duration: "45–50 min",
+            focus: "Complex training for maximum clubhead speed",
+            exercises: [
+              { id: "lba4_1", name: "Heavy Trap Bar Deadlift + Vertical Jump", sets: 4, reps: "4 reps + 3 jumps", targetReps: 4, isStrength: true, tempo: "Contrast", cue: "Heavy lift immediately followed by explosive jumps.", videoQuery: "contrast training trap bar deadlift vertical jump" },
+              { id: "lba4_2", name: "Low Back Ability: QL Raise (Dumbbell or Bench)", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Strict", cue: "Prevent late-round lower back fatigue and posture collapse.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "lba4_3", name: "Step-and-Hit Med Ball Throws", sets: 4, reps: "5 throws/side", targetReps: 5, isStrength: true, tempo: "Max Speed", cue: "Step onto lead foot and violently whip ball into wall.", videoQuery: "step and hit medicine ball rotational throw golf" },
+              { id: "lba4_4", name: "High-to-Low Cable Speed Chops", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Fast", cue: "Max rotational acceleration with clean deceleration.", videoQuery: "speed cable woodchop rotational power" },
+              { id: "lba4_5", name: "Low Back Ability: Jefferson Curl (Decompression)", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Release posterior shear after high-speed rotational work.", videoQuery: "jefferson curl proper form low back ability" }
+            ]
+          },
+          2: {
+            title: "Zone 2 & Overspeed Swing Session + LBA Floss",
+            duration: "45–50 min",
+            focus: "Aerobic maintenance & neural swing velocity",
+            exercises: [
+              { id: "lba4_2_1", name: "Zone 2 Cardiovascular Base", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Incline walk or cycling at conversational heart rate.", videoQuery: "peter attia zone 2 training explanation" },
+              { id: "lba4_2_2", name: "Overspeed Swing / Speed Stick Drills", sets: 3, reps: "10 swings each side", targetReps: 10, isStrength: true, tempo: "Max effort", cue: "10 swings dominant, 10 swings non-dominant (balances spine).", videoQuery: "superspeed golf speed sticks training protocol" },
+              { id: "lba4_2_3", name: "Low Back Ability: Elephant Walk", sets: 3, reps: "35 reps", targetReps: 35, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Floss hamstrings and lumbar fascia.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "lba4_2_4", name: "Low Back Ability: Couch Stretch", sets: 2, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Static", cue: "Prevent anterior hip tightness after speed swings.", videoQuery: "couch stretch knees over toes guy form" }
+            ]
+          },
+          3: {
+            title: "Upper Body Speed-Strength & LBA Back Extensions",
+            duration: "45–50 min",
+            focus: "Arm whip speed, lat power & lumbar stability",
+            exercises: [
+              { id: "lba4_3_1", name: "Landmine Push Press (Explosive)", sets: 4, reps: "5 reps/side", targetReps: 5, isStrength: true, tempo: "Explosive", cue: "Dip hips and drive barbell forcefully overhead.", videoQuery: "landmine push press explosive exercise" },
+              { id: "lba4_3_2", name: "Weighted Pull-Ups or Heavy Cable Rows", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-0-1-0", cue: "Strong upper back and lat recruitment.", videoQuery: "seated cable row proper form lat focus" },
+              { id: "lba4_3_3", name: "Low Back Ability: 45° Back Extension", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Erector endurance and glute lockout.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "lba4_3_4", name: "Rotational Med Ball Shot-Put Throws", sets: 3, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Fast", cue: "Push through trailing hip, snap wrist at release.", videoQuery: "rotational medicine ball shotput punch golf" },
+              { id: "lba4_3_5", name: "Half-Kneeling Cable Lift (Low-to-High)", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Crisp", cue: "Diagonal whip across chest with locked pelvis.", videoQuery: "half kneeling cable lift low to high" }
+            ]
+          },
+          4: {
+            title: "Mastery Aerobic Flush & Full LBA Decompression",
+            duration: "45 min",
+            focus: "Final recovery, lumbar restoration & vitality",
+            exercises: [
+              { id: "lba4_4_1", name: "Outdoor Aerobic Walk / Nature Ruck", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Mindful recovery walk in morning light.", videoQuery: "zone 2 rucking benefits" },
+              { id: "lba4_4_2", name: "Low Back Ability: Seated Good Morning", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Smooth", cue: "Adductor opening and hip hinge mastery.", videoQuery: "seated good morning low back ability form" },
+              { id: "lba4_4_3", name: "Low Back Ability: QL Raise", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Strict", cue: "Bulletproof lateral stability.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "lba4_4_4", name: "Low Back Ability: Jefferson Curl", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Spinal segmentation and hamstring length.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "lba4_4_5", name: "Hanging Spinal Decompression", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Relax shoulders, allow gravity to decompress lumbar discs.", videoQuery: "dead hang for spine health and posture" }
+            ]
+          }
+        }
+      }
+    };
+
+    function getActiveMonthsData() {
+      return (state.activeTrack === 'low_back_ability') ? MONTHS_DATA_LBA : MONTHS_DATA_STANDARD;
+    }
+
     // TRAVEL WORKOUT PRESETS
     const TRAVEL_PRESETS = {
       run60: {
@@ -804,6 +1041,7 @@
       curMonth: 1,
       curWeek: 1,
       curDay: 1,
+      activeTrack: "low_back_ability",
       activeTravelPreset: null,
       completedWorkouts: {},
       setDetails: {},          // key: `${workoutKey}_${ex.id}_set_${s}` -> { weight: "45", reps: 10, completed: true }
@@ -819,6 +1057,9 @@
         if (saved) {
           state = { ...state, ...JSON.parse(saved) };
         }
+        if (!state.activeTrack) {
+          state.activeTrack = "low_back_ability";
+        }
         if (!state.googleSheetUrl) {
           state.googleSheetUrl = "https://script.google.com/macros/s/AKfycbzI_Z6ShhvDS9PlG8rQ7JcFi7BUUFI66fp_hj58ln0DdiDdDrZCG8T0PvukdVanNUCv/exec";
         }
@@ -833,6 +1074,31 @@
       } catch (e) {
         console.error("Failed to save state", e);
       }
+    }
+
+    function toggleProgramTrack() {
+      state.activeTrack = (state.activeTrack === 'low_back_ability') ? 'standard' : 'low_back_ability';
+      saveState();
+      updateTrackUI();
+      renderCurrentWorkout();
+      renderProgramOverview();
+      showToast(state.activeTrack === 'low_back_ability' ? "Switched to Low Back Ability Track! 🛡️" : "Switched to Original Program! ⛳");
+    }
+
+    function updateTrackUI() {
+      const badge = document.getElementById('trackNameBadge');
+      const btnText = document.getElementById('toggleTrackBtnText');
+      if (!badge || !btnText) return;
+      if (state.activeTrack === 'low_back_ability') {
+        badge.textContent = "Low Back Ability Hybrid";
+        badge.className = "text-[11px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/50";
+        btnText.textContent = "Switch to Original";
+      } else {
+        badge.textContent = "Original Longevity & Golf";
+        badge.className = "text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/50";
+        btnText.textContent = "Switch to Low Back";
+      }
+      lucide.createIcons();
     }
 
     function getTodayKey() {
@@ -987,7 +1253,7 @@
         document.getElementById('travelBtnLabel').textContent = "Active: " + (state.activeTravelPreset === 'run60' ? 'Run' : state.activeTravelPreset === 'hotelGym' ? 'Hotel DB' : 'Room');
         document.getElementById('travelModeBtn').classList.add('border-emerald-500', 'bg-emerald-950/60', 'text-emerald-300');
       } else {
-        const monthInfo = MONTHS_DATA[state.curMonth];
+        const monthInfo = getActiveMonthsData()[state.curMonth];
         workoutData = monthInfo.days[state.curDay];
         document.getElementById('monthThemeLabel').textContent = monthInfo.theme;
         document.getElementById('travelBtnLabel').textContent = "Travel";
@@ -1204,7 +1470,7 @@
 
     function updateProgressStats() {
       const workoutKey = getCurrentWorkoutKey();
-      let workoutData = state.activeTravelPreset ? TRAVEL_PRESETS[state.activeTravelPreset] : MONTHS_DATA[state.curMonth].days[state.curDay];
+      let workoutData = state.activeTravelPreset ? TRAVEL_PRESETS[state.activeTravelPreset] : getActiveMonthsData()[state.curMonth].days[state.curDay];
 
       let totalSets = 0;
       let completedSets = 0;
@@ -1237,7 +1503,7 @@
       }
 
       const workoutKey = getCurrentWorkoutKey();
-      let workoutData = state.activeTravelPreset ? TRAVEL_PRESETS[state.activeTravelPreset] : MONTHS_DATA[state.curMonth].days[state.curDay];
+      let workoutData = state.activeTravelPreset ? TRAVEL_PRESETS[state.activeTravelPreset] : getActiveMonthsData()[state.curMonth].days[state.curDay];
       const today = getTodayKey();
 
       // Gather exercise breakdown
@@ -1417,7 +1683,7 @@
       container.innerHTML = '';
 
       for (let m = 1; m <= 4; m++) {
-        const monthData = MONTHS_DATA[m];
+        const monthData = getActiveMonthsData()[m];
         let monthCompleted = 0;
         let daysHtml = '';
 
@@ -1490,6 +1756,7 @@
     // ==========================================
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
+      updateTrackUI();
       renderCurrentWorkout();
       updateGoogleSheetIndicator();
       lucide.createIcons();
