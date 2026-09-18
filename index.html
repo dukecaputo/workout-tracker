@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Longevity & Golf Workout Tracker</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              accent: '#059669',
+              gold: '#eab308',
+              navy: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .tap-target {
+      min-height: 40px;
+      min-width: 40px;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    ::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-28 selection:bg-emerald-500 selection:text-white">
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastNotification" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none max-w-sm w-[90%]">
+    <div class="bg-emerald-500 text-slate-950 font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 border border-emerald-300">
+      <i data-lucide="check-circle-2" class="w-5 h-5 shrink-0"></i>
+      <span id="toastMessage" class="text-xs">Synced successfully!</span>
+    </div>
+  </div>
+
+  <!-- TOP APP HEADER -->
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-3">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 font-heading font-extrabold text-lg shadow-lg shadow-emerald-500/20">
+          ⛳
+        </div>
+        <div>
+          <h1 class="font-heading font-bold text-base tracking-tight text-white leading-tight">Longevity & Golf</h1>
+          <p class="text-[11px] text-emerald-400 font-medium tracking-wide">Attia • Huberman • Patrick • TPI</p>
+        </div>
+      </div>
+      
+      <!-- Quick Mode Badges & Settings -->
+      <div class="flex items-center space-x-2">
+        <button id="travelModeBtn" onclick="toggleTravelModal()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-emerald-500 transition-all flex items-center space-x-1">
+          <i data-lucide="plane" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span id="travelBtnLabel">Travel</span>
+        </button>
+        <button onclick="toggleQuickSettings()" class="p-1.5 rounded-lg text-slate-400 hover:text-white bg-slate-800/80 border border-slate-700 relative">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+          <span id="sheetConfiguredDot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-400"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-md mx-auto px-4 pt-4 pb-8 space-y-5">
+
+    <!-- TAB NAVIGATION BAR -->
+    <nav class="grid grid-cols-4 gap-1 p-1 bg-slate-900 rounded-2xl border border-slate-800 text-xs font-medium">
+      <button onclick="switchTab('workout')" id="tabBtn-workout" class="py-2.5 rounded-xl transition-all flex flex-col items-center justify-center space-y-1 bg-emerald-500 text-slate-950 font-bold shadow-md shadow-emerald-500/20">
+        <i data-lucide="dumbbell" class="w-4 h-4"></i>
+        <span>Workout</span>
+      </button>
+      <button onclick="switchTab('supplements')" id="tabBtn-supplements" class="py-2.5 rounded-xl transition-all flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-200">
+        <i data-lucide="pill" class="w-4 h-4"></i>
+        <span>Supps</span>
+      </button>
+      <button onclick="switchTab('program')" id="tabBtn-program" class="py-2.5 rounded-xl transition-all flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-200">
+        <i data-lucide="calendar" class="w-4 h-4"></i>
+        <span>16-Week</span>
+      </button>
+      <button onclick="switchTab('travel')" id="tabBtn-travel" class="py-2.5 rounded-xl transition-all flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-200">
+        <i data-lucide="briefcase" class="w-4 h-4"></i>
+        <span>Swaps</span>
+      </button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1: WORKOUT TAB -->
+    <!-- ============================================================ -->
+    <section id="tab-workout" class="space-y-4">
+
+      <!-- Month & Week & Day Picker Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <!-- Month Selector Pills -->
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Phase / Month</span>
+          <span id="monthThemeLabel" class="text-xs font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/40">
+            Anatomical Adaptation
+          </span>
+        </div>
+        <div class="grid grid-cols-4 gap-1.5">
+          <button onclick="selectMonth(1)" id="mBtn-1" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm">M1: Base</button>
+          <button onclick="selectMonth(2)" id="mBtn-2" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M2: Build</button>
+          <button onclick="selectMonth(3)" id="mBtn-3" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M3: Peak</button>
+          <button onclick="selectMonth(4)" id="mBtn-4" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M4: Speed</button>
+        </div>
+
+        <!-- Week & Day Selector -->
+        <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
+          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <span class="text-[10px] text-slate-400 px-1 font-semibold uppercase">Wk</span>
+            <button onclick="selectWeek(1)" id="wBtn-1" class="week-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-500 text-slate-950">1</button>
+            <button onclick="selectWeek(2)" id="wBtn-2" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">2</button>
+            <button onclick="selectWeek(3)" id="wBtn-3" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">3</button>
+            <button onclick="selectWeek(4)" id="wBtn-4" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">4</button>
+          </div>
+
+          <!-- Day Selection -->
+          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <button onclick="selectDay(1)" id="dBtn-1" class="day-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-500 text-slate-950">D1</button>
+            <button onclick="selectDay(2)" id="dBtn-2" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D2</button>
+            <button onclick="selectDay(3)" id="dBtn-3" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D3</button>
+            <button onclick="selectDay(4)" id="dBtn-4" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D4</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Workout Header & Summary Card -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-4 relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-28 h-28 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span id="dayBadge" class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-300 border border-emerald-800/60">Day 1</span>
+              <span id="sessionDuration" class="text-xs text-slate-400 flex items-center space-x-1">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                <span>45–55 min</span>
+              </span>
+            </div>
+            <h2 id="workoutTitle" class="font-heading font-bold text-lg text-white mt-1">Lower Body & Pelvic Stability</h2>
+            <p id="workoutFocus" class="text-xs text-slate-400 mt-0.5">Ground force, glute activation & anti-rotation</p>
+          </div>
+          
+          <!-- Day Completion Status Stamp -->
+          <div id="dayCompletedBadge" class="hidden flex flex-col items-center text-center bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-1 rounded-xl">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
+            <span class="text-[9px] font-bold text-emerald-300 uppercase mt-0.5">DONE</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar for Current Day -->
+        <div class="mt-4 pt-3 border-t border-slate-800/80">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <span class="text-slate-400 font-medium">Session Sets Completed</span>
+            <span id="sessionProgressText" class="font-bold text-emerald-400">0 / 15 sets</span>
+          </div>
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div id="sessionProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: TPI DYNAMIC WARM-UP (Collapsible / Checkable) -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+        <button onclick="toggleSection('warmupContent')" class="w-full flex items-center justify-between text-left">
+          <div class="flex items-center space-x-2">
+            <div class="w-6 h-6 rounded-lg bg-emerald-950 border border-emerald-800/60 flex items-center justify-center text-emerald-400 text-xs">
+              🔥
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-sm text-slate-200">TPI 8-Min Dynamic Warm-Up</h3>
+              <p class="text-[11px] text-slate-400">Spine, hips & rotator cuffs activation</p>
+            </div>
+          </div>
+          <i id="warmupChevron" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+        </button>
+
+        <div id="warmupContent" class="mt-3 space-y-2 pt-3 border-t border-slate-800/80">
+          <div id="warmupList" class="space-y-2 text-xs">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: MAIN EXERCISE CARDS WITH PER-SET WEIGHTS & REPS -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between px-1">
+          <h3 class="font-heading font-bold text-sm text-slate-300 uppercase tracking-wider">
+            Exercises & Set Log
+          </h3>
+          <span class="text-[11px] text-emerald-400 font-medium">Auto-saves to device</span>
+        </div>
+
+        <div id="exerciseList" class="space-y-3.5">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- SECTION 3: FINISH WORKOUT & GOOGLE SHEETS SYNC -->
+      <div class="pt-2 space-y-2.5">
+        <button id="finishWorkoutBtn" onclick="markCurrentWorkoutComplete()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 active:scale-[0.98] text-slate-950 font-heading font-bold text-base transition-all shadow-lg shadow-emerald-500/25 flex items-center justify-center space-x-2">
+          <i data-lucide="check-circle" class="w-5 h-5"></i>
+          <span>Complete This Workout</span>
+        </button>
+
+        <!-- Google Sheets Manual Sync Button -->
+        <button onclick="syncToGoogleSheetsManually()" class="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition-all flex items-center justify-center space-x-2">
+          <i data-lucide="table" class="w-4 h-4 text-emerald-400"></i>
+          <span id="sheetSyncBtnText">Sync Workout & Supps to Google Sheet</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2: SUPPLEMENTS TAB -->
+    <!-- ============================================================ -->
+    <section id="tab-supplements" class="hidden space-y-4">
+      
+      <!-- Date & Daily Streak Header -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Longevity & Mood Protocol</span>
+          <h2 class="font-heading font-bold text-lg text-white">Daily Supplement Stack</h2>
+          <p class="text-xs text-slate-400" id="suppDateLabel">Today's Check-in</p>
+        </div>
+        <div class="text-right">
+          <div class="inline-flex items-center space-x-1 bg-emerald-950/80 border border-emerald-800/60 px-2.5 py-1 rounded-xl">
+            <span class="text-base">🔥</span>
+            <span id="suppStreak" class="font-heading font-extrabold text-sm text-emerald-300">1 Day</span>
+          </div>
+          <button onclick="resetTodaySupplements()" class="block text-[10px] text-slate-500 hover:text-slate-300 mt-1">Reset Today</button>
+        </div>
+      </div>
+
+      <!-- Morning Stack -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">☀️</span>
+            <h3 class="font-heading font-bold text-sm text-slate-200">Morning (Mood & Cellular Energy)</h3>
+          </div>
+          <span class="text-[10px] font-semibold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/40">With Breakfast</span>
+        </div>
+
+        <div class="space-y-2.5" id="morningSuppList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Pre-Workout / Mobility Stack -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">⛳</span>
+            <h3 class="font-heading font-bold text-sm text-slate-200">Pre-Training (Tendons & Ligaments)</h3>
+          </div>
+          <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/40">30–60m Pre-Workout</span>
+        </div>
+
+        <div class="space-y-2.5" id="preWorkoutSuppList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Evening / Sleep Stack -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">🌙</span>
+            <h3 class="font-heading font-bold text-sm text-slate-200">Evening (Recovery & Neuro-Calm)</h3>
+          </div>
+          <span class="text-[10px] font-semibold text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded-full border border-indigo-800/40">30–60m Pre-Bed</span>
+        </div>
+
+        <div class="space-y-2.5" id="eveningSuppList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Scientific Reference Note Card -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-xs text-slate-400 space-y-2">
+        <div class="font-bold text-slate-300 flex items-center space-x-1.5">
+          <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
+          <span>Why This Specific Stack?</span>
+        </div>
+        <p><strong class="text-slate-200">High-EPA Omega-3 (Rhonda Patrick):</strong> ≥1,500mg EPA acts as a potent natural anti-inflammatory for seasonal mood dips.</p>
+        <p><strong class="text-slate-200">Creatine 5g (Attia/Huberman):</strong> Recharges brain ATP for mental stamina while boosting muscular power for golf.</p>
+        <p><strong class="text-slate-200">Collagen + Vit C (Keith Baar):</strong> Loads into tendon matrix before rotational swings to prevent golfer's elbow & back strain.</p>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3: 16-WEEK PROGRAM OVERVIEW -->
+    <!-- ============================================================ -->
+    <section id="tab-program" class="hidden space-y-4">
+      
+      <!-- Total Progress Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h2 class="font-heading font-bold text-base text-white">4-Month Total Progress</h2>
+            <p class="text-xs text-slate-400" id="totalWorkoutsCompletedText">0 / 64 Workouts Logged</p>
+          </div>
+          <div class="text-right">
+            <span id="overallPercentage" class="font-heading font-extrabold text-2xl text-emerald-400">0%</span>
+          </div>
+        </div>
+        <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+          <div id="overallProgressBar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 transition-all duration-500 rounded-full" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Phase Cards (Months 1 to 4) -->
+      <div class="space-y-3" id="programMonthCards">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Export / Backup Data -->
+      <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-4 flex items-center justify-between text-xs">
+        <div>
+          <span class="font-bold text-slate-300">Data Management</span>
+          <p class="text-[11px] text-slate-500">Progress is stored safely in your browser.</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="exportData()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Export</button>
+          <button onclick="confirmResetAll()" class="px-2.5 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 hover:text-rose-100 border border-rose-900/50">Reset All</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 4: TRAVEL & SWAPS -->
+    <!-- ============================================================ -->
+    <section id="tab-travel" class="hidden space-y-4">
+      
+      <div class="bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-950 border border-emerald-900/50 rounded-2xl p-4">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">✈️</span>
+          <div>
+            <h2 class="font-heading font-bold text-base text-white">Travel Equipment Swaps</h2>
+            <p class="text-xs text-slate-400">Never skip a workout when on the road.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Swap Option A: 60-Min Road Run -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">🏃</span>
+            <h3 class="font-heading font-bold text-sm text-slate-200">The 60-Minute Outdoor Road Run</h3>
+          </div>
+          <span class="text-[10px] font-bold text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded-full border border-cyan-800/40">Zone 2 + VO2</span>
+        </div>
+        <p class="text-xs text-slate-400">Sub for any Day 2 or Day 4 session when you have no gym access.</p>
+        <div class="space-y-1.5 text-xs text-slate-300 bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-400 font-bold">•</span>
+            <span><strong>First 35–40 min:</strong> Steady Zone 2 (Conversational pace; HR 65–75% max).</span>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-400 font-bold">•</span>
+            <span><strong>Next 15 min (VO2 Max Surges):</strong> 5 rounds of: 1 min hard uphill surge + 2 min easy jog.</span>
+          </div>
+          <div class="flex items-start space-x-2">
+            <span class="text-emerald-400 font-bold">•</span>
+            <span><strong>Final 5 min:</strong> Walking cool-down + nasal box breathing.</span>
+          </div>
+        </div>
+        <button onclick="applyTravelPreset('run60')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 border border-slate-700 transition-all">
+          Load as Today's Workout
+        </button>
+      </div>
+
+      <!-- Swap Option B: Hotel Gym Dumbbells -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">🏨</span>
+            <h3 class="font-heading font-bold text-sm text-slate-200">Hotel Gym (Dumbbells Only)</h3>
+          </div>
+          <span class="text-[10px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/40">Full Body</span>
+        </div>
+        <p class="text-xs text-slate-400">Sub for Day 1 or Day 3 when visiting standard hotel gyms.</p>
+        <div class="text-xs text-slate-300 bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1">
+          <p>• <strong>DB Goblet Squats:</strong> 4 × 12 reps</p>
+          <p>• <strong>DB Single-Arm Rows:</strong> 4 × 10 reps/side</p>
+          <p>• <strong>DB Romanian Deadlifts:</strong> 3 × 10 reps</p>
+          <p>• <strong>Push-Ups with 2s Pause:</strong> 3 × 12–15 reps</p>
+          <p>• <strong>DB Suitcase Carries:</strong> 3 × 45s walks</p>
+        </div>
+        <button onclick="applyTravelPreset('hotelGym')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 border border-slate-700 transition-all">
+          Load as Today's Workout
+        </button>
+      </div>
+
+      <!-- Swap Option C: Hotel Room / Zero Equipment -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">🧳</span>
+            <h3 class="font-heading font-bold text-sm text-slate-200">Hotel Room (Bands & Bodyweight)</h3>
+          </div>
+          <span class="text-[10px] font-bold text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded-full border border-indigo-800/40">Zero Equipment</span>
+        </div>
+        <p class="text-xs text-slate-400">100% hotel room friendly with 1 mini-band.</p>
+        <div class="text-xs text-slate-300 bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1">
+          <p>• <strong>Tempo 1.5-Rep Bodyweight Squats:</strong> 3 × 15 reps</p>
+          <p>• <strong>Single-Leg RDL Reach:</strong> 3 × 10 reps/side</p>
+          <p>• <strong>Band Pull-Aparts & Face Pulls:</strong> 3 × 15 reps</p>
+          <p>• <strong>Lateral Band Monster Walks:</strong> 3 × 20 paces</p>
+          <p>• <strong>Plank Rotations & Deadbugs:</strong> 3 × 10 reps/side</p>
+        </div>
+        <button onclick="applyTravelPreset('hotelRoom')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 border border-slate-700 transition-all">
+          Load as Today's Workout
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- QUICK SETTINGS / GOOGLE SHEETS SETUP MODAL -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 max-w-sm w-full space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <h3 class="font-heading font-bold text-base text-white flex items-center space-x-2">
+          <i data-lucide="table" class="w-4 h-4 text-emerald-400"></i>
+          <span>Google Sheets Sync</span>
+        </h3>
+        <button onclick="toggleQuickSettings()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-300">
+        <p class="text-slate-400 leading-relaxed">
+          Paste your Google Apps Script Webhook URL below to automatically append your workout results and daily supplements to your personal Google Sheet:
+        </p>
+
+        <div class="space-y-1">
+          <label class="font-bold text-slate-200 text-[11px]">Google Webhook URL:</label>
+          <input 
+            type="url" 
+            id="googleSheetUrlInput" 
+            placeholder="https://script.google.com/macros/s/.../exec" 
+            value="" 
+            class="w-full bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 outline-none transition-all font-mono text-[11px]" 
+          />
+        </div>
+
+        <button onclick="saveGoogleSheetConfig()" class="w-full py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-all shadow-md shadow-emerald-500/20">
+          Save Google Sheet URL
+        </button>
+
+        <!-- Step by Step Setup Accordion -->
+        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
+          <div class="text-emerald-400 font-bold flex items-center space-x-1">
+            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+            <span>How to get your Webhook URL (2 min):</span>
+          </div>
+          <div>1. In Google Sheets: <strong>Extensions → Apps Script</strong></div>
+          <div>2. Paste the provided script and click <strong>Deploy → New deployment</strong></div>
+          <div>3. Select <strong>Web app</strong>, set access to <strong>"Anyone"</strong>, copy URL.</div>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-800">
+        <button onclick="toggleQuickSettings()" class="w-full py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white font-bold text-xs">
+          Close Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC & DATABASE -->
+  <script>
+    // ==========================================
+    // 1. DATA DEFINITIONS: 16-WEEK PROGRAM & SUPPS
+    // ==========================================
+    const TPI_WARMUP = [
+      { id: "w1", name: "Cat-Cow to Bird-Dog", reps: "8 reps each side", targetNumber: "8/side", cue: "Spine articulation & diagonal core brace", videoQuery: "cat cow bird dog exercise form tutorial" },
+      { id: "w2", name: "World's Greatest Stretch + T-Spine Rotation", reps: "5 reps/side", targetNumber: "5/side", cue: "Open hip flexor, hamstring & reach to sky", videoQuery: "worlds greatest stretch thoracic rotation form" },
+      { id: "w3", name: "90/90 Hip Flow Switches", reps: "6 switches/side", targetNumber: "6/side", cue: "Internal/external hip rotation for backswing", videoQuery: "90 90 hip mobility flow switches" },
+      { id: "w4", name: "Band / Towel Overhead Dislocates", reps: "10–12 reps", targetNumber: "12", cue: "Scapular retraction & shoulder capsule opening", videoQuery: "shoulder dislocates with band or towel form" },
+      { id: "w5", name: "Glute Bridge with 3s Isometric Hold", reps: "10 reps", targetNumber: "10", cue: "Awakens dormant glute max for ground force", videoQuery: "glute bridge isometric hold form cues" }
+    ];
+
+    const SUPPLEMENT_STACK = {
+      morning: [
+        { id: "d3k2", name: "Vitamin D3 + K2 (MK-7)", dose: "5,000 IU D3 + 100mcg K2", purpose: "Circadian sync, mood/SAD, bone density", tag: "Patrick/Attia" },
+        { id: "omega3", name: "High-EPA Omega-3 (Triglyceride)", dose: "2–3g total (≥1,500mg EPA)", purpose: "Neuro-inflammation reduction & mood stabilization", tag: "Patrick Protocol" },
+        { id: "creatine", name: "Creatine Monohydrate", dose: "5g daily (anytime)", purpose: "Brain ATP buffer (fights fatigue) + golf power", tag: "Attia/Huberman" },
+        { id: "coq10", name: "Ubiquinol (Active CoQ10)", dose: "100–200mg", purpose: "Mitochondrial energy biogenesis", tag: "Mitochondria" }
+      ],
+      preWorkout: [
+        { id: "collagen", name: "Hydrolyzed Collagen Peptides + Vit C", dose: "15g Collagen + 500mg Vitamin C", purpose: "Tendon & ligament synthesis (protects elbows/back)", tag: "Keith Baar / TPI" }
+      ],
+      evening: [
+        { id: "magnesium", name: "Magnesium L-Threonate or Glycinate", dose: "300–400mg elemental Mg", purpose: "GABA relaxation, sleep architecture & muscle recovery", tag: "Huberman Sleep" },
+        { id: "theanine", name: "L-Theanine (Optional)", dose: "100–200mg", purpose: "Smooth calming effect before sleep", tag: "Sleep Stack" }
+      ]
+    };
+
+    const MONTHS_DATA = {
+      1: {
+        title: "Month 1: Re-Conditioning & TPI Base",
+        theme: "Anatomical Adaptation",
+        desc: "Restoring joint mobility, building the aerobic base, and eliminating baseline fatigue.",
+        days: {
+          1: {
+            title: "Lower Body & Pelvic Stability",
+            duration: "45–50 min",
+            focus: "Ground reaction force, glute activation & anti-rotation",
+            exercises: [
+              { id: "m1d1_1", name: "Goblet Squat (or Box Squat)", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Knees track over toes, upright torso, full depth.", videoQuery: "goblet squat proper form tutorial" },
+              { id: "m1d1_2", name: "Dumbbell Romanian Deadlift (RDL)", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Hinge hips backward, keep spine neutral, feel hamstring stretch.", videoQuery: "dumbbell romanian deadlift proper form" },
+              { id: "m1d1_3", name: "Reverse Lunges (Bodyweight or DBs)", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Step back softly, drive through front lead heel.", videoQuery: "reverse lunge proper form" },
+              { id: "m1d1_4", name: "Half-Kneeling Pallof Press (Band/Cable)", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2s hold", cue: "Resist the rotational pull; brace core like taking a punch.", videoQuery: "half kneeling pallof press form" },
+              { id: "m1d1_5", name: "Farmer's Walk (DBs or Kettlebells)", sets: 3, reps: "40 paces", targetReps: 40, unit: "paces", isStrength: true, tempo: "Smooth", cue: "Shoulders packed back, tall spine, firm grip.", videoQuery: "farmers walk exercise proper form" }
+            ]
+          },
+          2: {
+            title: "Zone 2 Engine & T-Spine Mobility",
+            duration: "45–55 min",
+            focus: "Mitochondrial biogenesis & golf thoracic arc width",
+            exercises: [
+              { id: "m1d2_1", name: "Zone 2 Steady-State Cardio", sets: 1, reps: "40–45 min", targetReps: 45, unit: "mins", isStrength: false, tempo: "Conversational", cue: "Incline treadmill walk (12% @ 2.8-3.2mph) or stationary bike. Nasal breathing.", videoQuery: "peter attia zone 2 cardio guide" },
+              { id: "m1d2_2", name: "Quadruped Thread-the-Needle", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: false, tempo: "2s pause", cue: "Rotate thoracic spine while locking hips square.", videoQuery: "quadruped thread the needle thoracic mobility" },
+              { id: "m1d2_3", name: "Seated Thoracic Rotations w/ Club", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Cross club across chest, rotate shoulders without moving knees.", videoQuery: "tpi seated thoracic rotation golf exercise" }
+            ]
+          },
+          3: {
+            title: "Upper Body & Core Dissociation",
+            duration: "45–50 min",
+            focus: "Scapular control, lat width & golf swing whip",
+            exercises: [
+              { id: "m1d3_1", name: "Dumbbell Flat/Incline Bench Press", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Elbows at 45° angle, full chest contraction.", videoQuery: "dumbbell bench press proper form" },
+              { id: "m1d3_2", name: "Single-Arm Dumbbell Row", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Pull dumbbell toward hip pocket, pause at top.", videoQuery: "single arm dumbbell row proper form" },
+              { id: "m1d3_3", name: "Standing Cable/Band Woodchops", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Dynamic", cue: "High-to-low diagonal chop, pivot back foot.", videoQuery: "cable woodchoppers high to low golf form" },
+              { id: "m1d3_4", name: "Face Pulls with External Rotation", sets: 3, reps: "12–15 reps", targetReps: 15, isStrength: true, tempo: "2-1-1-0", cue: "Pull band/rope to forehead, elbows high, thumbs back.", videoQuery: "face pulls with external rotation athlean x" },
+              { id: "m1d3_5", name: "Deadbug with Opposite Reach", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: false, tempo: "Slow", cue: "Lower back glued to floor throughout movement.", videoQuery: "deadbug exercise proper form" }
+            ]
+          },
+          4: {
+            title: "Aerobic Flush & TPI Pelvic Flow (Optional)",
+            duration: "40–45 min",
+            focus: "Recovery, joint flossing & light carries",
+            exercises: [
+              { id: "m1d4_1", name: "Outdoor Zone 2 Ruck or Incline Walk", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Heart rate 60–70% max; sunshine and fresh air.", videoQuery: "zone 2 walking rucking benefits" },
+              { id: "m1d4_2", name: "TPI Pelvic Tilts (Golf Stance)", sets: 3, reps: "12 reps", targetReps: 12, isStrength: false, tempo: "Smooth", cue: "Anterior & posterior pelvic tilt without moving upper torso.", videoQuery: "tpi pelvic tilt test golf exercise" },
+              { id: "m1d4_3", name: "Suitcase Carry (Single-Arm DB)", sets: 3, reps: "30 paces/side", targetReps: 30, unit: "paces", isStrength: true, tempo: "Upright", cue: "Do not let torso lean to the side.", videoQuery: "suitcase carry core exercise form" }
+            ]
+          }
+        }
+      },
+      2: {
+        title: "Month 2: Strength & Capacity Build",
+        theme: "Hypertrophy & Aerobic Base",
+        desc: "Progressive overload on core compound lifts, longer Zone 2 sessions, and intro interval surges.",
+        days: {
+          1: {
+            title: "Lower Body & Glute Power Base",
+            duration: "45–55 min",
+            focus: "Posterior chain drive & unilateral leg power",
+            exercises: [
+              { id: "m2d1_1", name: "Trap Bar Deadlift (or Heavy DB Deadlift)", sets: 4, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Drive feet through floor, squeeze glutes at top lockout.", videoQuery: "trap bar deadlift form tutorial" },
+              { id: "m2d1_2", name: "Bulgarian Split Squats (or Step-Ups)", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Load the front leg glute, maintain tall torso.", videoQuery: "bulgarian split squat proper form" },
+              { id: "m2d1_3", name: "Single-Leg Hip Thrusts", sets: 3, reps: "10 reps/leg", targetReps: 10, isStrength: true, tempo: "2s hold", cue: "Crucial for lead-hip extension in downswing.", videoQuery: "single leg hip thrust form" },
+              { id: "m2d1_4", name: "Kneeling Cable/Band Chops & Lifts", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Controlled", cue: "Down-to-up diagonal lift mimicking golf release.", videoQuery: "half kneeling cable lift low to high golf" },
+              { id: "m2d1_5", name: "Suitcase Carry (Heavy DB)", sets: 3, reps: "35 paces/side", targetReps: 35, unit: "paces", isStrength: true, tempo: "Braced", cue: "Maximum anti-lateral flexion core activation.", videoQuery: "heavy suitcase carry proper form" }
+            ]
+          },
+          2: {
+            title: "Zone 2 + Norwegian Surge Intro",
+            duration: "50 min",
+            focus: "Mitochondrial capacity + introductory VO2 max spikes",
+            exercises: [
+              { id: "m2d2_1", name: "Zone 2 Steady State (Bike/Rower/Treadmill)", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Steady", cue: "Keep heart rate strictly in Zone 2 (talking pace).", videoQuery: "how to do zone 2 cardio properly" },
+              { id: "m2d2_2", name: "Introductory VO2 Max Surges", sets: 4, reps: "60s hard / 90s easy", targetReps: 4, unit: "rounds", isStrength: false, tempo: "RPE 8.5", cue: "60s sprint effort (>85% HR) followed by 90s easy recovery spin.", videoQuery: "vo2 max sprint interval training" },
+              { id: "m2d2_3", name: "Hamstring Flossing & 90/90 Flow", sets: 2, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Slow", cue: "Restores hip rotation after sprint intervals.", videoQuery: "neural hamstring floss exercise mobility" }
+            ]
+          },
+          3: {
+            title: "Upper Body Pull/Push & Deceleration",
+            duration: "45–55 min",
+            focus: "Lats, rotator cuff & deceleration strength",
+            exercises: [
+              { id: "m2d3_1", name: "Overhead Dumbbell / Landmine Press", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Core locked tight, press overhead without arching lower back.", videoQuery: "standing dumbbell overhead press form" },
+              { id: "m2d3_2", name: "Lat Pulldown or Neutral Grip Pull-Ups", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Lats are the primary braking/acceleration muscle in swing.", videoQuery: "lat pulldown proper form cues" },
+              { id: "m2d3_3", name: "Incline DB Chest Press", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-0-1-0", cue: "Full stretch at bottom, squeeze chest at top.", videoQuery: "incline dumbbell bench press form" },
+              { id: "m2d3_4", name: "Standing Anti-Rotation Hold w/ Step-Outs", sets: 3, reps: "6 reps/side", targetReps: 6, isStrength: true, tempo: "5s hold", cue: "Step laterally away from anchor while holding band extended.", videoQuery: "pallof press lateral step out form" },
+              { id: "m2d3_5", name: "Bottoms-Up Kettlebell Carry (or Wrist Curls)", sets: 3, reps: "30s/side", targetReps: 30, unit: "sec", isStrength: true, tempo: "Firm", cue: "Forearm stability to prevent golfer's elbow.", videoQuery: "bottoms up kettlebell carry form" }
+            ]
+          },
+          4: {
+            title: "Golf Agility & Rotational Core (Optional)",
+            duration: "40–45 min",
+            focus: "Lateral bounds, med ball tosses & aerobic flush",
+            exercises: [
+              { id: "m2d4_1", name: "Medicine Ball Chest Passes (Wall)", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Explosive", cue: "Push explosively through palms into concrete wall.", videoQuery: "explosive medicine ball chest pass against wall" },
+              { id: "m2d4_2", name: "Side Plank with Top Leg Lift", sets: 3, reps: "25s/side", targetReps: 25, unit: "sec", isStrength: false, tempo: "Static", cue: "Glute medius and obliques locked in alignment.", videoQuery: "side plank with leg lift form" },
+              { id: "m2d4_3", name: "Zone 2 Incline Walk / Light Jog", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Easy aerobic active recovery.", videoQuery: "zone 2 heart rate training" }
+            ]
+          }
+        }
+      },
+      3: {
+        title: "Month 3: Power & Peak VO2 Max",
+        theme: "Rate of Force Development & VO2 Peak",
+        desc: "Explosive hip snaps, rotational medicine ball work, and the gold-standard Norwegian 4x4 protocol.",
+        days: {
+          1: {
+            title: "Explosive Posterior Chain & Ground Force",
+            duration: "45–55 min",
+            focus: "Hip snap velocity & heavy structural carries",
+            exercises: [
+              { id: "m3d1_1", name: "Kettlebell Swings (Hardstyle)", sets: 4, reps: "12 reps", targetReps: 12, isStrength: true, tempo: "Explosive", cue: "Sharp hip snap, float kettlebell to chest height, brace glutes.", videoQuery: "kettlebell swing hardstyle proper form" },
+              { id: "m3d1_2", name: "Front Squats (Barbell or 2x DBs)", sets: 3, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "3-1-1-0", cue: "Upright posture, solid quad drive from bottom.", videoQuery: "dumbbell front squat proper form" },
+              { id: "m3d1_3", name: "Single-Leg Romanian Deadlift w/ Reach", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-1-1-0", cue: "Reach forward as back leg extends; balance on lead foot.", videoQuery: "single leg rdl with reach form" },
+              { id: "m3d1_4", name: "Rotational Med Ball Slams / Wall Throws", sets: 4, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Max Intent", cue: "Transfer energy from back hip through torso into wall.", videoQuery: "rotational medicine ball scoop toss wall golf" },
+              { id: "m3d1_5", name: "Heavy Farmer's Walk", sets: 4, reps: "30 paces", targetReps: 30, unit: "paces", isStrength: true, tempo: "Heavy", cue: "Maximum grip load, tall posture, steady breath.", videoQuery: "heavy farmers carry form cues" }
+            ]
+          },
+          2: {
+            title: "The Longevity VO2 Max Peak (Norwegian 4×4)",
+            duration: "45–50 min",
+            focus: "Cardiovascular stroke volume & peak mitochondrial output",
+            exercises: [
+              { id: "m3d2_1", name: "Warm-Up (Easy Spin / Jog)", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Gradual ramp", cue: "Gradually raise heart rate to top of Zone 2.", videoQuery: "how to warm up for vo2 max intervals" },
+              { id: "m3d2_2", name: "Norwegian 4×4 Protocol (Attia/Patrick)", sets: 4, reps: "4m Work / 3m Rest", targetReps: 4, unit: "intervals", isStrength: false, tempo: "RPE 9.0", cue: "4 min @ 90-95% Max HR (breathing hard), followed by 3 min easy Zone 1 recovery walk. Repeat 4 total times.", videoQuery: "norwegian 4x4 interval training peter attia" },
+              { id: "m3d2_3", name: "Cool-Down & Box Breathing", sets: 1, reps: "8 min", targetReps: 8, unit: "mins", isStrength: false, tempo: "Down-regulate", cue: "Slow walking + 4s inhale, 4s hold, 4s exhale, 4s hold.", videoQuery: "box breathing technique andrew huberman" }
+            ]
+          },
+          3: {
+            title: "Upper Body Power & Lateral Deceleration",
+            duration: "45–55 min",
+            focus: "Torso whip, lateral stabilization & pressing power",
+            exercises: [
+              { id: "m3d3_1", name: "Barbell / Heavy DB Incline Bench", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-1-1-0", cue: "Heavy controlled lower, explosive press.", videoQuery: "incline dumbbell bench press heavy form" },
+              { id: "m3d3_2", name: "Single-Arm Cable Row w/ Torso Rotation", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Dynamic", cue: "Rotate torso slightly into row to mimic follow-through.", videoQuery: "single arm rotational cable row form" },
+              { id: "m3d3_3", name: "Skater Jumps (Lateral Bound to Stick)", sets: 3, reps: "5 jumps/side", targetReps: 5, isStrength: false, tempo: "Explosive", cue: "Jump laterally and freeze on lead foot for 2 seconds.", videoQuery: "lateral skater jumps with stick landing form" },
+              { id: "m3d3_4", name: "Half-Kneeling Landmine Rotations", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Controlled", cue: "Arc barbell across body with straight arms and locked hips.", videoQuery: "half kneeling landmine rotations core exercise" },
+              { id: "m3d3_5", name: "Hanging Knee Raises / Ab Wheel", sets: 3, reps: "10 reps", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Full abdominal compression without swinging.", videoQuery: "hanging knee raises proper form" }
+            ]
+          },
+          4: {
+            title: "Extended Aerobic Flush (Optional)",
+            duration: "50–60 min",
+            focus: "Endurance foundation & recovery",
+            exercises: [
+              { id: "m3d4_1", name: "60-Min Zone 2 Trail Run or Incline Ruck", sets: 1, reps: "50–60 min", targetReps: 60, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Steady, rhythmic aerobic conditioning.", videoQuery: "zone 2 rucking benefits" },
+              { id: "m3d4_2", name: "Full Body TPI Mobility Sequence", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Relaxed", cue: "Thoracic, hip, and shoulder passive stretches.", videoQuery: "tpi full body golf mobility routine" }
+            ]
+          }
+        }
+      },
+      4: {
+        title: "Month 4: Speed & Peak Integration",
+        theme: "Rotational Speed & Clubhead Velocity",
+        desc: "Converting structural strength into maximum rotational whip, fatigue resistance, and daily stamina.",
+        days: {
+          1: {
+            title: "Contrast Ground Power & Rotation",
+            duration: "45–50 min",
+            focus: "Complex training for maximum clubhead speed",
+            exercises: [
+              { id: "m4d1_1", name: "Heavy Trap Bar Deadlift + Vertical Jump", sets: 4, reps: "4 reps + 3 jumps", targetReps: 4, isStrength: true, tempo: "Contrast", cue: "Heavy lift immediately followed by explosive jumps.", videoQuery: "contrast training trap bar deadlift vertical jump" },
+              { id: "m4d1_2", name: "Step-and-Hit Med Ball Throws", sets: 4, reps: "5 throws/side", targetReps: 5, isStrength: true, tempo: "Max Speed", cue: "Step onto lead foot and violently whip ball into wall.", videoQuery: "step and hit medicine ball rotational throw golf" },
+              { id: "m4d1_3", name: "DB Step-Ups with Knee Drive", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Explosive", cue: "Drive lead leg through box and snap trailing knee high.", videoQuery: "explosive dumbbell step up with knee drive" },
+              { id: "m4d1_4", name: "High-to-Low Cable Speed Chops", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Fast", cue: "Max rotational acceleration with clean deceleration.", videoQuery: "speed cable woodchop rotational power" },
+              { id: "m4d1_5", name: "Heavy Single-Arm Suitcase Carry", sets: 3, reps: "40 paces/side", targetReps: 40, unit: "paces", isStrength: true, tempo: "Solid", cue: "Core bracing under maximum unilateral load.", videoQuery: "heavy suitcase carry form" }
+            ]
+          },
+          2: {
+            title: "Zone 2 & Overspeed Swing Session",
+            duration: "45–50 min",
+            focus: "Aerobic maintenance & neural swing velocity",
+            exercises: [
+              { id: "m4d2_1", name: "Zone 2 Cardiovascular Base", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Incline walk or cycling at conversational heart rate.", videoQuery: "peter attia zone 2 training explanation" },
+              { id: "m4d2_2", name: "Overspeed Swing / Speed Stick Drills", sets: 3, reps: "10 swings each side", targetReps: 10, isStrength: true, tempo: "Max effort", cue: "10 swings dominant, 10 swings non-dominant (balances spine).", videoQuery: "superpseed golf speed sticks training protocol" },
+              { id: "m4d2_3", name: "T-Spine & Lat Active Floss", sets: 2, reps: "10 reps", targetReps: 10, isStrength: false, tempo: "Slow", cue: "Down-regulate nervous system.", videoQuery: "lat stretch t-spine mobility golf" }
+            ]
+          },
+          3: {
+            title: "Upper Body Speed-Strength & Anti-Rotation",
+            duration: "45–50 min",
+            focus: "Arm whip speed & core deceleration",
+            exercises: [
+              { id: "m4d3_1", name: "Landmine Push Press (Explosive)", sets: 4, reps: "5 reps/side", targetReps: 5, isStrength: true, tempo: "Explosive", cue: "Dip hips and drive barbell forcefully overhead.", videoQuery: "landmine push press explosive exercise" },
+              { id: "m4d3_2", name: "Weighted Pull-Ups or Heavy Cable Rows", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-0-1-0", cue: "Strong upper back and lat recruitment.", videoQuery: "seated cable row proper form lat focus" },
+              { id: "m4d3_3", name: "Rotational Med Ball Shot-Put Throws", sets: 3, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Fast", cue: "Push through trailing hip, snap wrist at release.", videoQuery: "rotational medicine ball shotput punch golf" },
+              { id: "m4d3_4", name: "Half-Kneeling Cable Lift (Low-to-High)", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Crisp", cue: "Diagonal whip across chest with locked pelvis.", videoQuery: "half kneeling cable lift low to high" },
+              { id: "m4d3_5", name: "Deadbug with Isometric Wall Push", sets: 3, reps: "6 reps/side", targetReps: 6, isStrength: false, tempo: "3s push", cue: "Push hands against wall while cycling legs.", videoQuery: "deadbug with wall push isometric" }
+            ]
+          },
+          4: {
+            title: "VO2 Max Tabata & Regeneration (Optional)",
+            duration: "40–45 min",
+            focus: "Cardiovascular flush & deep restorative recovery",
+            exercises: [
+              { id: "m4d4_1", name: "30s/30s High-Intensity Interval Flush", sets: 8, reps: "30s Max / 30s Rest", targetReps: 8, unit: "rounds", isStrength: false, tempo: "All Out", cue: "Air bike, sprint, or rower at peak aerobic output.", videoQuery: "30 30 interval workout vo2 max" },
+              { id: "m4d4_2", name: "Zone 2 Extended Cool-Down", sets: 1, reps: "20 min", targetReps: 20, unit: "mins", isStrength: false, tempo: "Zone 1-2", cue: "Flush lactate, restore resting heart rate.", videoQuery: "zone 2 cool down active recovery" },
+              { id: "m4d4_3", name: "Full Body TPI Recovery Flow", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Deep breath", cue: "Hip 90/90, child's pose with lat reach, deep breathing.", videoQuery: "tpi golf cooldown stretches" }
+            ]
+          }
+        }
+      }
+    };
+
+    // TRAVEL WORKOUT PRESETS
+    const TRAVEL_PRESETS = {
+      run60: {
+        title: "Travel: 60-Minute Outdoor Road Run",
+        duration: "60 min",
+        focus: "Zone 2 Base + VO2 Max Hill Surges",
+        exercises: [
+          { id: "tr_run1", name: "Steady Zone 2 Road / Trail Run", sets: 1, reps: "35–40 min", targetReps: 40, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Strict conversational pace (HR 65–75% max). Slow to walk on steep hills if needed.", videoQuery: "zone 2 running conversational pace guide" },
+          { id: "tr_run2", name: "VO2 Max Uphill Surges / Sprints", sets: 5, reps: "1m Hard / 2m Jog", targetReps: 5, unit: "hills", isStrength: false, tempo: "RPE 9.0", cue: "Find an incline: 1 min hard surge followed by 2 min easy recovery jog.", videoQuery: "hill sprints vo2 max running workout" },
+          { id: "tr_run3", name: "Walking Cool-Down + Nasal Breath", sets: 1, reps: "5 min", targetReps: 5, unit: "mins", isStrength: false, tempo: "Easy", cue: "Gradually bring heart rate down to normal.", videoQuery: "nasal breathing running recovery" }
+        ]
+      },
+      hotelGym: {
+        title: "Travel: Hotel Gym (Dumbbells Only)",
+        duration: "45 min",
+        focus: "Full Body Strength & Rotational Dissociation",
+        exercises: [
+          { id: "tr_hg1", name: "DB Goblet Squats (Tempo)", sets: 4, reps: "12 reps", targetReps: 12, isStrength: true, tempo: "3-1-1-0", cue: "Sink deep, pause at bottom, drive up.", videoQuery: "dumbbell goblet squat form" },
+          { id: "tr_hg2", name: "Single-Arm DB Rows", sets: 4, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Pull toward hip, squeeze lat at peak.", videoQuery: "dumbbell single arm row bench form" },
+          { id: "tr_hg3", name: "Dumbbell Romanian Deadlifts", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Feel hamstrings stretch, neutral spine.", videoQuery: "dumbbell rdl proper form" },
+          { id: "tr_hg4", name: "Push-Ups with 2s Pause at Bottom", sets: 3, reps: "12–15 reps", targetReps: 15, isStrength: true, tempo: "2-2-1-0", cue: "Chest 1 inch off floor, tight core.", videoQuery: "push ups with pause at bottom proper form" },
+          { id: "tr_hg5", name: "DB Suitcase Carries across Gym Floor", sets: 3, reps: "45 sec / arm", targetReps: 45, unit: "sec", isStrength: true, tempo: "Braced", cue: "Heavy dumbbell in one hand, walk tall.", videoQuery: "dumbbell suitcase carry proper form" }
+        ]
+      },
+      hotelRoom: {
+        title: "Travel: Hotel Room (Bands & Bodyweight)",
+        duration: "40 min",
+        focus: "Zero-Equipment Mobility & Metabolic Conditioning",
+        exercises: [
+          { id: "tr_hr1", name: "Tempo 1.5-Rep Bodyweight Squats", sets: 3, reps: "15 reps", targetReps: 15, isStrength: true, tempo: "1.5 Style", cue: "Down to bottom, up halfway, back down, stand tall.", videoQuery: "1.5 rep bodyweight squats form" },
+          { id: "tr_hr2", name: "Single-Leg RDL Reach (Balance)", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Slow", cue: "Balance on lead foot, reach forward.", videoQuery: "bodyweight single leg rdl balance reach" },
+          { id: "tr_hr3", name: "Resistance Band Pull-Aparts & Face Pulls", sets: 3, reps: "15 reps", targetReps: 15, isStrength: true, tempo: "2s hold", cue: "Pinch shoulder blades, posture opener.", videoQuery: "band pull aparts and face pulls form" },
+          { id: "tr_hr4", name: "Lateral Band Monster Walks", sets: 3, reps: "20 paces", targetReps: 20, unit: "paces", isStrength: true, tempo: "Continuous", cue: "Band around ankles or knees, stay in low athletic golf stance.", videoQuery: "lateral band walks monster walks golf glute activation" },
+          { id: "tr_hr5", name: "Plank Shoulder Taps & Deadbugs", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Keep hips completely motionless during taps.", videoQuery: "plank shoulder taps proper form" }
+        ]
+      }
+    };
+
+    function getYoutubeUrl(query) {
+      return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+    }
+
+    // ==========================================
+    // 2. STATE MANAGEMENT & LOCAL STORAGE
+    // ==========================================
+    const STORAGE_KEY = "clippy_longevity_golf_v1";
+    let state = {
+      curMonth: 1,
+      curWeek: 1,
+      curDay: 1,
+      activeTravelPreset: null,
+      completedWorkouts: {},
+      setDetails: {},          // key: `${workoutKey}_${ex.id}_set_${s}` -> { weight: "45", reps: 10, completed: true }
+      completedWarmup: {},     // key: `${workoutKey}_w_${item.id}`: true
+      supplementLogs: {},
+      googleSheetUrl: "",
+      suppStreak: 1
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          state = { ...state, ...JSON.parse(saved) };
+        }
+      } catch (e) {
+        console.error("Failed to load state", e);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.error("Failed to save state", e);
+      }
+    }
+
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      text.textContent = msg;
+      toast.classList.remove('-translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('-translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
+    // ==========================================
+    // 3. TAB & VIEW CONTROLLERS
+    // ==========================================
+    function switchTab(tabName) {
+      ['workout', 'supplements', 'program', 'travel'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`tabBtn-${t}`);
+        btn.classList.remove('bg-emerald-500', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-emerald-500/20');
+        btn.classList.add('text-slate-400');
+      });
+
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tabBtn-${tabName}`);
+      activeBtn.classList.add('bg-emerald-500', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-emerald-500/20');
+      activeBtn.classList.remove('text-slate-400');
+
+      if (tabName === 'supplements') renderSupplements();
+      if (tabName === 'program') renderProgramOverview();
+      lucide.createIcons();
+    }
+
+    function selectMonth(m) {
+      state.curMonth = m;
+      state.activeTravelPreset = null;
+      document.querySelectorAll('.month-btn').forEach(b => {
+        b.classList.remove('bg-emerald-500', 'text-slate-950', 'border-emerald-400');
+        b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+      });
+      const activeBtn = document.getElementById(`mBtn-${m}`);
+      activeBtn.classList.add('bg-emerald-500', 'text-slate-950', 'border-emerald-400');
+      activeBtn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+      
+      saveState();
+      renderCurrentWorkout();
+    }
+
+    function selectWeek(w) {
+      state.curWeek = w;
+      state.activeTravelPreset = null;
+      document.querySelectorAll('.week-btn').forEach(b => {
+        b.classList.remove('bg-emerald-500', 'text-slate-950');
+        b.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById(`wBtn-${w}`);
+      activeBtn.classList.add('bg-emerald-500', 'text-slate-950');
+      activeBtn.classList.remove('text-slate-400');
+
+      saveState();
+      renderCurrentWorkout();
+    }
+
+    function selectDay(d) {
+      state.curDay = d;
+      state.activeTravelPreset = null;
+      document.querySelectorAll('.day-btn').forEach(b => {
+        b.classList.remove('bg-emerald-500', 'text-slate-950');
+        b.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById(`dBtn-${d}`);
+      activeBtn.classList.add('bg-emerald-500', 'text-slate-950');
+      activeBtn.classList.remove('text-slate-400');
+
+      saveState();
+      renderCurrentWorkout();
+    }
+
+    function toggleSection(id) {
+      const el = document.getElementById(id);
+      const isHidden = el.classList.contains('hidden');
+      if (isHidden) {
+        el.classList.remove('hidden');
+        document.getElementById('warmupChevron').classList.remove('rotate-180');
+      } else {
+        el.classList.add('hidden');
+        document.getElementById('warmupChevron').classList.add('rotate-180');
+      }
+    }
+
+    function toggleQuickSettings() {
+      const modal = document.getElementById('settingsModal');
+      modal.classList.toggle('hidden');
+      if (!modal.classList.contains('hidden')) {
+        document.getElementById('googleSheetUrlInput').value = state.googleSheetUrl || '';
+      }
+    }
+
+    function saveGoogleSheetConfig() {
+      const val = document.getElementById('googleSheetUrlInput').value.trim();
+      state.googleSheetUrl = val;
+      saveState();
+      updateGoogleSheetIndicator();
+      toggleQuickSettings();
+      showToast(val ? "Google Sheet Webhook Saved! 📊" : "Google Sheet Webhook Cleared.");
+    }
+
+    function updateGoogleSheetIndicator() {
+      const dot = document.getElementById('sheetConfiguredDot');
+      if (state.googleSheetUrl) {
+        dot.classList.remove('hidden');
+      } else {
+        dot.classList.add('hidden');
+      }
+    }
+
+    function toggleTravelModal() {
+      switchTab('travel');
+    }
+
+    function applyTravelPreset(presetKey) {
+      state.activeTravelPreset = presetKey;
+      saveState();
+      switchTab('workout');
+      renderCurrentWorkout();
+    }
+
+    // ==========================================
+    // 4. WORKOUT RENDERER & INTERACTION
+    // ==========================================
+    function getCurrentWorkoutKey() {
+      if (state.activeTravelPreset) {
+        return `travel_${state.activeTravelPreset}`;
+      }
+      return `m${state.curMonth}_w${state.curWeek}_d${state.curDay}`;
+    }
+
+    function renderCurrentWorkout() {
+      const workoutKey = getCurrentWorkoutKey();
+      let workoutData;
+      let isTravel = !!state.activeTravelPreset;
+
+      if (isTravel) {
+        workoutData = TRAVEL_PRESETS[state.activeTravelPreset];
+        document.getElementById('travelBtnLabel').textContent = "Active: " + (state.activeTravelPreset === 'run60' ? 'Run' : state.activeTravelPreset === 'hotelGym' ? 'Hotel DB' : 'Room');
+        document.getElementById('travelModeBtn').classList.add('border-emerald-500', 'bg-emerald-950/60', 'text-emerald-300');
+      } else {
+        const monthInfo = MONTHS_DATA[state.curMonth];
+        workoutData = monthInfo.days[state.curDay];
+        document.getElementById('monthThemeLabel').textContent = monthInfo.theme;
+        document.getElementById('travelBtnLabel').textContent = "Travel";
+        document.getElementById('travelModeBtn').classList.remove('border-emerald-500', 'bg-emerald-950/60', 'text-emerald-300');
+      }
+
+      // Update Header details
+      document.getElementById('dayBadge').textContent = isTravel ? "TRAVEL SWAP" : `Month ${state.curMonth} • Wk ${state.curWeek} • Day ${state.curDay}`;
+      document.getElementById('sessionDuration').innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5"></i><span>${workoutData.duration}</span>`;
+      document.getElementById('workoutTitle').textContent = workoutData.title;
+      document.getElementById('workoutFocus').textContent = workoutData.focus;
+
+      // Completion badge
+      const isCompleted = !!state.completedWorkouts[workoutKey];
+      const completedBadge = document.getElementById('dayCompletedBadge');
+      const finishBtn = document.getElementById('finishWorkoutBtn');
+
+      if (isCompleted) {
+        completedBadge.classList.remove('hidden');
+        finishBtn.classList.remove('from-emerald-500', 'to-teal-500');
+        finishBtn.classList.add('bg-slate-800', 'text-emerald-400', 'border', 'border-emerald-500/40');
+        finishBtn.innerHTML = `<i data-lucide="check-check" class="w-5 h-5"></i><span>Completed (Tap to Unmark)</span>`;
+      } else {
+        completedBadge.classList.add('hidden');
+        finishBtn.classList.add('from-emerald-500', 'to-teal-500');
+        finishBtn.classList.remove('bg-slate-800', 'text-emerald-400', 'border', 'border-emerald-500/40');
+        finishBtn.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5"></i><span>Complete This Workout</span>`;
+      }
+
+      // Render Warmup List
+      const warmupContainer = document.getElementById('warmupList');
+      warmupContainer.innerHTML = '';
+      TPI_WARMUP.forEach((item, idx) => {
+        const warmupId = `${workoutKey}_w_${item.id}`;
+        const isChecked = !!state.completedWarmup[warmupId];
+        const ytUrl = getYoutubeUrl(item.videoQuery || item.name + " exercise form tutorial");
+        
+        const div = document.createElement('div');
+        div.className = `p-2.5 rounded-xl border transition-all flex items-start justify-between cursor-pointer ${isChecked ? 'bg-emerald-950/40 border-emerald-800/60 text-emerald-200' : 'bg-slate-950 border-slate-800/80 text-slate-300'}`;
+        div.onclick = () => toggleWarmupItem(warmupId);
+        div.innerHTML = `
+          <div class="pr-2">
+            <div class="flex items-center space-x-2">
+              <span class="font-bold text-slate-200 ${isChecked ? 'line-through text-slate-400' : ''}">${item.name}</span>
+              <a href="${ytUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded-md bg-red-950/80 border border-red-800/50 text-[10px] font-semibold text-red-300 hover:text-white hover:bg-red-900 transition-all">
+                <i data-lucide="youtube" class="w-3 h-3 text-red-400"></i>
+                <span>Video</span>
+              </a>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Target: <strong class="text-emerald-400 font-semibold">${item.targetNumber || item.reps}</strong> • <span class="text-slate-500">${item.cue}</span></div>
+          </div>
+          <div class="w-5 h-5 mt-0.5 rounded-md border flex items-center justify-center shrink-0 ${isChecked ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'border-slate-700 bg-slate-900'}">
+            ${isChecked ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+          </div>
+        `;
+        warmupContainer.appendChild(div);
+      });
+
+      // Render Exercise Cards with Detailed Per-Set Logging
+      const exerciseContainer = document.getElementById('exerciseList');
+      exerciseContainer.innerHTML = '';
+
+      workoutData.exercises.forEach((ex, exIndex) => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3";
+
+        const ytUrl = getYoutubeUrl(ex.videoQuery || ex.name + " exercise form tutorial");
+        const defaultUnit = ex.unit || "reps";
+        const isStrength = ex.isStrength !== false;
+
+        // Check if all sets for this exercise are done
+        let allSetsCompleted = true;
+        for (let s = 0; s < ex.sets; s++) {
+          const setId = `${workoutKey}_${ex.id}_set_${s}`;
+          if (!state.setDetails[setId] || !state.setDetails[setId].completed) {
+            allSetsCompleted = false;
+            break;
+          }
+        }
+
+        // Build Set Rows
+        let setRowsHtml = '';
+        for (let s = 0; s < ex.sets; s++) {
+          const setId = `${workoutKey}_${ex.id}_set_${s}`;
+          const currentData = state.setDetails[setId] || {
+            weight: (s > 0 && state.setDetails[`${workoutKey}_${ex.id}_set_${s-1}`]?.weight) || '',
+            reps: ex.targetReps || '',
+            completed: false
+          };
+          const isDone = !!currentData.completed;
+
+          setRowsHtml += `
+            <div class="grid grid-cols-12 gap-1.5 items-center p-2 rounded-xl border transition-all ${isDone ? 'bg-emerald-950/30 border-emerald-800/60' : 'bg-slate-950/80 border-slate-800'}">
+              <!-- Set # -->
+              <div class="col-span-2 flex items-center justify-center">
+                <span class="w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center ${isDone ? 'bg-emerald-500/20 text-emerald-300 font-extrabold' : 'bg-slate-800 text-slate-400'}">
+                  #${s + 1}
+                </span>
+              </div>
+
+              <!-- Weight (lbs) Input -->
+              <div class="col-span-4">
+                <div class="relative flex items-center">
+                  <input 
+                    type="text" 
+                    inputmode="decimal"
+                    placeholder="${isStrength ? 'lbs / kg' : 'load'}"
+                    value="${currentData.weight || ''}" 
+                    oninput="updateSetData('${setId}', 'weight', this.value)"
+                    class="w-full bg-slate-900 border ${isDone ? 'border-emerald-800 text-emerald-200' : 'border-slate-700/80 text-white'} focus:border-emerald-500 rounded-lg py-1.5 px-2 text-center text-xs font-bold outline-none transition-all" 
+                  />
+                </div>
+              </div>
+
+              <!-- Reps / Target Input -->
+              <div class="col-span-3">
+                <div class="flex items-center space-x-1">
+                  <input 
+                    type="number" 
+                    placeholder="${ex.targetReps || ''}" 
+                    value="${currentData.reps !== undefined && currentData.reps !== '' ? currentData.reps : (ex.targetReps || '')}" 
+                    oninput="updateSetData('${setId}', 'reps', this.value)"
+                    class="w-full bg-slate-900 border ${isDone ? 'border-emerald-800 text-emerald-200' : 'border-slate-700/80 text-white'} focus:border-emerald-500 rounded-lg py-1.5 px-1 text-center text-xs font-bold outline-none transition-all" 
+                  />
+                </div>
+              </div>
+
+              <!-- Completed Check Button -->
+              <div class="col-span-3 flex justify-end">
+                <button 
+                  onclick="toggleSetComplete('${setId}', ${ex.targetReps || 0})"
+                  class="w-full py-1.5 px-2 rounded-lg font-bold text-xs transition-all flex items-center justify-center space-x-1 ${isDone ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'}">
+                  <i data-lucide="${isDone ? 'check' : 'circle'}" class="w-3.5 h-3.5 stroke-[3]"></i>
+                  <span>${isDone ? 'Done' : 'Hit'}</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <!-- Header -->
+          <div class="flex items-start justify-between">
+            <div class="pr-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-5 h-5 rounded-full ${allSetsCompleted ? 'bg-emerald-500 text-slate-950 font-extrabold' : 'bg-slate-800 text-slate-300 font-bold'} text-[11px] flex items-center justify-center">
+                  ${allSetsCompleted ? '✓' : (exIndex + 1)}
+                </span>
+                <h4 class="font-heading font-bold text-sm text-white">${ex.name}</h4>
+              </div>
+              <div class="flex items-center space-x-2 mt-1.5 text-xs text-slate-300">
+                <span class="bg-slate-800/80 px-2 py-0.5 rounded-md font-semibold text-emerald-400 border border-slate-700/60">${ex.sets} Sets × ${ex.reps}</span>
+                <span class="text-slate-400">Target: <strong class="text-slate-200 font-semibold">${ex.targetReps} ${defaultUnit}</strong></span>
+              </div>
+            </div>
+
+            <!-- YouTube Video Tutorial Link -->
+            <a href="${ytUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-red-950/70 border border-red-800/60 text-xs font-bold text-red-300 hover:text-white hover:bg-red-900/80 transition-all shrink-0 shadow-sm shadow-red-950/40">
+              <i data-lucide="youtube" class="w-4 h-4 text-red-400"></i>
+              <span>Watch</span>
+            </a>
+          </div>
+
+          <!-- Coach Cue -->
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
+            <span class="text-emerald-400 font-bold">Key Cue:</span> ${ex.cue}
+            ${ex.tempo ? `<span class="ml-1 text-slate-500">• Tempo: <strong class="text-slate-300">${ex.tempo}</strong></span>` : ''}
+          </div>
+
+          <!-- Sets Logging Grid Table -->
+          <div class="space-y-1.5 pt-1">
+            <div class="grid grid-cols-12 gap-1.5 text-[10px] uppercase font-bold text-slate-400 px-1">
+              <div class="col-span-2 text-center">Set</div>
+              <div class="col-span-4 text-center">Weight (lbs)</div>
+              <div class="col-span-3 text-center">Reps (${defaultUnit})</div>
+              <div class="col-span-3 text-center">Action</div>
+            </div>
+
+            ${setRowsHtml}
+          </div>
+        `;
+        exerciseContainer.appendChild(card);
+      });
+
+      updateProgressStats();
+      updateGoogleSheetIndicator();
+      lucide.createIcons();
+    }
+
+    function toggleWarmupItem(id) {
+      state.completedWarmup[id] = !state.completedWarmup[id];
+      saveState();
+      renderCurrentWorkout();
+    }
+
+    function updateSetData(setId, field, value) {
+      state.setDetails[setId] = state.setDetails[setId] || {};
+      state.setDetails[setId][field] = value;
+      saveState();
+    }
+
+    function toggleSetComplete(setId, defaultTargetReps) {
+      state.setDetails[setId] = state.setDetails[setId] || {};
+      const wasDone = !!state.setDetails[setId].completed;
+      state.setDetails[setId].completed = !wasDone;
+
+      if (!wasDone && (state.setDetails[setId].reps === undefined || state.setDetails[setId].reps === '')) {
+        state.setDetails[setId].reps = defaultTargetReps;
+      }
+
+      saveState();
+      renderCurrentWorkout();
+    }
+
+    function updateProgressStats() {
+      const workoutKey = getCurrentWorkoutKey();
+      let workoutData = state.activeTravelPreset ? TRAVEL_PRESETS[state.activeTravelPreset] : MONTHS_DATA[state.curMonth].days[state.curDay];
+
+      let totalSets = 0;
+      let completedSets = 0;
+
+      workoutData.exercises.forEach(ex => {
+        totalSets += ex.sets;
+        for (let s = 0; s < ex.sets; s++) {
+          const setId = `${workoutKey}_${ex.id}_set_${s}`;
+          if (state.setDetails[setId] && state.setDetails[setId].completed) {
+            completedSets++;
+          }
+        }
+      });
+
+      const pct = totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0;
+      document.getElementById('sessionProgressText').textContent = `${completedSets} / ${totalSets} sets done (${pct}%)`;
+      document.getElementById('sessionProgressBar').style.width = `${pct}%`;
+    }
+
+    // ==========================================
+    // 5. GOOGLE SHEETS SYNC DISPATCHER
+    // ==========================================
+    async function syncToGoogleSheets(isManual = false) {
+      if (!state.googleSheetUrl) {
+        if (isManual) {
+          toggleQuickSettings();
+          alert("Please paste your Google Sheet Webhook URL in Settings first!");
+        }
+        return false;
+      }
+
+      const workoutKey = getCurrentWorkoutKey();
+      let workoutData = state.activeTravelPreset ? TRAVEL_PRESETS[state.activeTravelPreset] : MONTHS_DATA[state.curMonth].days[state.curDay];
+      const today = getTodayKey();
+
+      // Gather exercise breakdown
+      const exercisesLogged = [];
+      let totalCompletedSets = 0;
+      let totalPlannedSets = 0;
+
+      workoutData.exercises.forEach(ex => {
+        totalPlannedSets += ex.sets;
+        const setLogs = [];
+        for (let s = 0; s < ex.sets; s++) {
+          const setId = `${workoutKey}_${ex.id}_set_${s}`;
+          const sData = state.setDetails[setId];
+          if (sData && sData.completed) {
+            totalCompletedSets++;
+            const w = sData.weight ? `${sData.weight} lbs` : 'BW/Band';
+            const r = sData.reps || ex.targetReps || '';
+            setLogs.push(`Set ${s+1}: ${w} × ${r}`);
+          }
+        }
+        if (setLogs.length > 0) {
+          exercisesLogged.push(`${ex.name} [${setLogs.join(' | ')}]`);
+        }
+      });
+
+      // Gather supplements logged today
+      const suppsToday = [];
+      ['morning', 'preWorkout', 'evening'].forEach(g => {
+        SUPPLEMENT_STACK[g].forEach(item => {
+          if (state.supplementLogs[`${today}_${item.id}`]) {
+            suppsToday.push(item.name);
+          }
+        });
+      });
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        date: today,
+        workoutKey: workoutKey,
+        phase: state.activeTravelPreset ? "Travel Swap" : `Month ${state.curMonth}`,
+        week: state.activeTravelPreset ? "N/A" : `Week ${state.curWeek}`,
+        day: state.activeTravelPreset ? "N/A" : `Day ${state.curDay}`,
+        title: workoutData.title,
+        duration: workoutData.duration,
+        focus: workoutData.focus,
+        setsDone: `${totalCompletedSets}/${totalPlannedSets}`,
+        exercisesDetail: exercisesLogged.join('\n'),
+        supplementsCompleted: suppsToday.join(', ') || 'None logged today'
+      };
+
+      try {
+        await fetch(state.googleSheetUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        showToast("✓ Synced to Google Sheet! 📊");
+        return true;
+      } catch (err) {
+        console.error("Google Sheets Sync Error", err);
+        showToast("⚠️ Sync failed. Check Webhook URL.");
+        return false;
+      }
+    }
+
+    function syncToGoogleSheetsManually() {
+      syncToGoogleSheets(true);
+    }
+
+    function markCurrentWorkoutComplete() {
+      const workoutKey = getCurrentWorkoutKey();
+      const isAlreadyDone = !!state.completedWorkouts[workoutKey];
+
+      if (isAlreadyDone) {
+        delete state.completedWorkouts[workoutKey];
+      } else {
+        state.completedWorkouts[workoutKey] = Date.now();
+        // Trigger celebratory confetti
+        try {
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.8 },
+            colors: ['#22c55e', '#10b981', '#34d399', '#f59e0b']
+          });
+        } catch(e) {}
+
+        // Auto-sync to Google Sheet if configured
+        syncToGoogleSheets(false);
+      }
+
+      saveState();
+      renderCurrentWorkout();
+    }
+
+    // ==========================================
+    // 6. SUPPLEMENT TRACKER
+    // ==========================================
+    function renderSupplements() {
+      const today = getTodayKey();
+      const options = { weekday: 'short', month: 'short', day: 'numeric' };
+      document.getElementById('suppDateLabel').textContent = new Date().toLocaleDateString('en-US', options);
+      document.getElementById('suppStreak').textContent = `${state.suppStreak} Days`;
+
+      const renderGroup = (containerId, items) => {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        items.forEach(item => {
+          const suppKey = `${today}_${item.id}`;
+          const isDone = !!state.supplementLogs[suppKey];
+          const div = document.createElement('div');
+          div.className = `p-3 rounded-xl border transition-all flex items-start justify-between cursor-pointer ${isDone ? 'bg-emerald-950/40 border-emerald-800/60 text-emerald-200' : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'}`;
+          div.onclick = () => toggleSupp(suppKey);
+          div.innerHTML = `
+            <div class="pr-2">
+              <div class="flex items-center space-x-2">
+                <span class="font-bold text-sm text-slate-100 ${isDone ? 'line-through text-slate-400' : ''}">${item.name}</span>
+              </div>
+              <div class="text-xs text-emerald-400 font-semibold mt-0.5">${item.dose}</div>
+              <div class="text-[11px] text-slate-400 mt-1">${item.purpose}</div>
+            </div>
+            <div class="w-6 h-6 mt-0.5 rounded-lg border flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 border-emerald-400 text-slate-950 shadow-md' : 'border-slate-700 bg-slate-900'}">
+              ${isDone ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      };
+
+      renderGroup('morningSuppList', SUPPLEMENT_STACK.morning);
+      renderGroup('preWorkoutSuppList', SUPPLEMENT_STACK.preWorkout);
+      renderGroup('eveningSuppList', SUPPLEMENT_STACK.evening);
+      lucide.createIcons();
+    }
+
+    function toggleSupp(suppKey) {
+      state.supplementLogs[suppKey] = !state.supplementLogs[suppKey];
+      saveState();
+      renderSupplements();
+    }
+
+    function resetTodaySupplements() {
+      const today = getTodayKey();
+      Object.keys(state.supplementLogs).forEach(k => {
+        if (k.startsWith(today)) {
+          delete state.supplementLogs[k];
+        }
+      });
+      saveState();
+      renderSupplements();
+    }
+
+    // ==========================================
+    // 7. PROGRAM OVERVIEW (16-WEEK PROGRESS)
+    // ==========================================
+    function renderProgramOverview() {
+      let totalPlanned = 4 * 4 * 4; // 4 months × 4 weeks × 4 days = 64
+      let completedCount = 0;
+
+      for (let m = 1; m <= 4; m++) {
+        for (let w = 1; w <= 4; w++) {
+          for (let d = 1; d <= 4; d++) {
+            if (state.completedWorkouts[`m${m}_w${w}_d${d}`]) {
+              completedCount++;
+            }
+          }
+        }
+      }
+
+      const totalPct = Math.round((completedCount / totalPlanned) * 100);
+      document.getElementById('totalWorkoutsCompletedText').textContent = `${completedCount} / ${totalPlanned} Workouts Logged`;
+      document.getElementById('overallPercentage').textContent = `${totalPct}%`;
+      document.getElementById('overallProgressBar').style.width = `${totalPct}%`;
+
+      const container = document.getElementById('programMonthCards');
+      container.innerHTML = '';
+
+      for (let m = 1; m <= 4; m++) {
+        const monthData = MONTHS_DATA[m];
+        let monthCompleted = 0;
+        let daysHtml = '';
+
+        for (let w = 1; w <= 4; w++) {
+          daysHtml += `<div class="text-[10px] text-slate-400 font-bold uppercase py-1">Wk ${w}:</div><div class="grid grid-cols-4 gap-1.5 mb-2">`;
+          for (let d = 1; d <= 4; d++) {
+            const isDone = !!state.completedWorkouts[`m${m}_w${w}_d${d}`];
+            if (isDone) monthCompleted++;
+            daysHtml += `
+              <button onclick="goToWorkout(${m}, ${w}, ${d})" class="py-2 rounded-lg text-xs font-bold border transition-all flex items-center justify-center space-x-1 ${isDone ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-300' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'}">
+                <span>D${d}</span>
+                ${isDone ? '<i data-lucide="check" class="w-3 h-3 stroke-[3] text-emerald-400"></i>' : ''}
+              </button>
+            `;
+          }
+          daysHtml += `</div>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3";
+        card.innerHTML = `
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800/60">Month ${m}</span>
+              <h3 class="font-heading font-bold text-base text-white mt-1">${monthData.title}</h3>
+              <p class="text-xs text-slate-400 mt-0.5">${monthData.desc}</p>
+            </div>
+            <span class="text-xs font-bold text-emerald-400 bg-slate-950 px-2.5 py-1 rounded-xl border border-slate-800">${monthCompleted} / 16 Done</span>
+          </div>
+          <div class="pt-2 border-t border-slate-800">
+            ${daysHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      }
+      lucide.createIcons();
+    }
+
+    function goToWorkout(m, w, d) {
+      state.curMonth = m;
+      state.curWeek = w;
+      state.curDay = d;
+      state.activeTravelPreset = null;
+      saveState();
+      switchTab('workout');
+      selectMonth(m);
+      selectWeek(w);
+      selectDay(d);
+    }
+
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `longevity_golf_tracker_backup_${getTodayKey()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function confirmResetAll() {
+      if (confirm("Are you sure you want to reset all workout and supplement checkmarks?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    }
+
+    // ==========================================
+    // 8. INITIALIZATION
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderCurrentWorkout();
+      updateGoogleSheetIndicator();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
