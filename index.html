@@ -134,52 +134,7 @@
 
       <!-- Month & Week & Day Picker Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-        <!-- Program Track Switcher (LBA vs Original) -->
-        <div class="flex items-center justify-between pb-2.5 border-b border-slate-800/80">
-          <div class="flex items-center space-x-1.5">
-            <span class="text-[11px] font-semibold text-slate-400">Track:</span>
-            <span id="trackNameBadge" class="text-[11px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/50">
-              Low Back Ability Hybrid
-            </span>
-          </div>
-          <button onclick="toggleProgramTrack()" class="text-[11px] font-bold text-slate-300 hover:text-white bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 hover:border-emerald-500 transition-all flex items-center space-x-1">
-            <i data-lucide="repeat" class="w-3 h-3 text-emerald-400"></i>
-            <span id="toggleTrackBtnText">Switch to Original</span>
-          </button>
-        </div>
-
-        <!-- Month Selector Pills -->
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Phase / Month</span>
-          <span id="monthThemeLabel" class="text-xs font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/40">
-            Anatomical Adaptation
-          </span>
-        </div>
-        <div class="grid grid-cols-4 gap-1.5">
-          <button onclick="selectMonth(1)" id="mBtn-1" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm">M1: Base</button>
-          <button onclick="selectMonth(2)" id="mBtn-2" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M2: Build</button>
-          <button onclick="selectMonth(3)" id="mBtn-3" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M3: Peak</button>
-          <button onclick="selectMonth(4)" id="mBtn-4" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M4: Speed</button>
-        </div>
-
-        <!-- Week & Day Selector -->
-        <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
-          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-            <span class="text-[10px] text-slate-400 px-1 font-semibold uppercase">Wk</span>
-            <button onclick="selectWeek(1)" id="wBtn-1" class="week-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-500 text-slate-950">1</button>
-            <button onclick="selectWeek(2)" id="wBtn-2" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">2</button>
-            <button onclick="selectWeek(3)" id="wBtn-3" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">3</button>
-            <button onclick="selectWeek(4)" id="wBtn-4" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">4</button>
-          </div>
-
-          <!-- Day Selection -->
-          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-            <button onclick="selectDay(1)" id="dBtn-1" class="day-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-500 text-slate-950">D1</button>
-            <button onclick="selectDay(2)" id="dBtn-2" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D2</button>
-            <button onclick="selectDay(3)" id="dBtn-3" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D3</button>
-            <button onclick="selectDay(4)" id="dBtn-4" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D4</button>
-          </div>
-        </div>
+        
       </div>
 
       <!-- Current Workout Header & Summary Card -->
@@ -539,11 +494,11 @@
     // 1. DATA DEFINITIONS: 16-WEEK PROGRAM & SUPPS
     // ==========================================
     const TPI_WARMUP = [
-      { id: "w1", name: "Standing Spine Waves & Reach (Off Floor)", reps: "8 reps each side", targetNumber: "8/side", cue: "Standing athletic hinge, articulate spine into cat-cow waves, reach arm forward.", videoQuery: "standing cat cow exercise spinal mobility form" },
-      { id: "w2", name: "Box-Supported Lunge & T-Spine Sky Reach", reps: "5 reps/side", targetNumber: "5/side", cue: "Front foot on 16-18\" box/bench, tall posture, deep thoracic rotation reach.", videoQuery: "elevated runner lunge with thoracic rotation form" },
-      { id: "w3", name: "Standing Box/Bench Pigeon & Hip Swivels", reps: "6 switches/side", targetNumber: "6/side", cue: "Shin resting on bench/box at hip height, rotate torso to open hip rotators.", videoQuery: "standing pigeon stretch on bench box" },
+      { id: "w1", name: "Standing Spine Waves & Reach", reps: "8 reps each side", targetNumber: "8/side", cue: "Standing athletic hinge, articulate spine into cat-cow waves, reach arm forward.", videoQuery: "standing cat cow exercise spinal mobility form" },
+      { id: "w2", name: "Box-Supported Lunge & Sky Reach", reps: "5 reps/side", targetNumber: "5/side", cue: "Front foot on 16-18\" box/bench, tall posture, deep thoracic rotation reach.", videoQuery: "elevated runner lunge with thoracic rotation form" },
+      { id: "w3", name: "Standing Box Pigeon & Hip Swivels", reps: "6 switches/side", targetNumber: "6/side", cue: "Shin resting on bench/box at hip height, rotate torso to open hip rotators.", videoQuery: "standing pigeon stretch on bench box" },
       { id: "w4", name: "Band / Towel Overhead Dislocates", reps: "10–12 reps", targetNumber: "12", cue: "Standing, scapular retraction & shoulder capsule opening without arching lower back.", videoQuery: "shoulder dislocates with band or towel form" },
-      { id: "w5", name: "Standing Band/Cable Glute Kickbacks", reps: "10 reps/leg", targetNumber: "10", cue: "Standing tall, kick heel back with 2s glute squeeze. Awakens glutes for ground force.", videoQuery: "standing glute kickback band cable form" }
+      { id: "w5", name: "Standing Band / Cable Glute Kickbacks", reps: "10 reps/leg", targetNumber: "10", cue: "Standing tall, kick heel back with 2s glute squeeze. Awakens glutes for ground force.", videoQuery: "standing glute kickback band cable form" }
     ];
 
     const SUPPLEMENT_STACK = {
@@ -563,126 +518,136 @@
     };
 
     // ==========================================
-    // 1A. STANDARD FULL BODY (100% OFF-THE-FLOOR)
+    // UNIFIED FULL-BODY PROGRAM (100% OFF-THE-FLOOR)
     // ==========================================
-    const MONTHS_DATA_STANDARD = {
+    const MONTHS_DATA = {
       1: {
-        title: "Month 1: Re-Conditioning & TPI Base (Full Body)",
-        theme: "Anatomical Adaptation (Full Body - Off Floor)",
-        desc: "Full-body compound movements every session, 100% off the floor using boxes, benches, and cables.",
+        title: "Month 1: Foundation & Base Conditioning",
+        theme: "Anatomical Adaptation & Core Strength",
+        desc: "Full-body compound movements every session, 100% off the floor using boxes, benches, dumbbells, and cables.",
         days: {
           1: {
-            title: "Full Body A: Squat & Upper Push/Pull",
+            title: "Full Body A: Box Squat, Good Morning & Press",
             duration: "45–50 min",
-            focus: "Box squat ground force, horizontal pressing, rowing & anti-rotation",
+            focus: "Box squat ground force, loaded hip hinge, horizontal pressing, rowing & lateral spine support",
             exercises: [
               { id: "m1d1_1", name: "Goblet Box Squat (to 16-18\" Box)", targetWeight: "65 lbs DB", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Sit back to box with control, touch softly, drive through heels to stand. Upright chest.", videoQuery: "goblet box squat proper form tutorial" },
-              { id: "m1d1_2", name: "Dumbbell Flat or Incline Bench Press", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Lying on bench. Elbows at 45° angle, full chest contraction at top.", videoQuery: "dumbbell bench press proper form" },
-              { id: "m1d1_3", name: "Single-Arm Dumbbell Row (Hand on Bench)", targetWeight: "60 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "One hand braced on bench. Pull DB toward hip pocket, pause at top.", videoQuery: "single arm dumbbell row proper form" },
-              { id: "m1d1_4", name: "Standing Cable / Band Pallof Press", targetWeight: "35 lbs / Black Band", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2s hold", cue: "Standing athletic stance. Resist rotational pull; brace core like taking a punch.", videoQuery: "standing pallof press proper form" },
-              { id: "m1d1_5", name: "Farmer's Walk (DBs or Kettlebells)", targetWeight: "70 lbs DBs", sets: 3, reps: "40 paces", targetReps: 40, unit: "paces", isStrength: true, tempo: "Smooth", cue: "Shoulders packed back, tall spine, firm grip.", videoQuery: "farmers walk exercise proper form" }
+              { id: "m1d1_2", name: "Seated Good Morning (Bench/Box)", targetWeight: "45–55 lbs DB/Bar", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench/box with wide stance. Hinge deep at hips with tall spine, stretching adductors and strengthening lower back.", videoQuery: "seated good morning low back ability form brendan backstrom" },
+              { id: "m1d1_3", name: "Dumbbell Bench Press", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Lying on bench. Elbows at 45° angle, full chest contraction at top.", videoQuery: "dumbbell bench press proper form" },
+              { id: "m1d1_4", name: "Single-Arm Dumbbell Row (Hand on Bench)", targetWeight: "60 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "One hand braced on bench. Pull DB toward hip pocket, pause at top.", videoQuery: "single arm dumbbell row proper form" },
+              { id: "m1d1_5", name: "Dumbbell QL Raise", targetWeight: "30–35 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Standing side bend or on 45° back extension bench. Lateral flexion of lumbar spine to bulletproof against spasms.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "m1d1_6", name: "Farmer's Walk", targetWeight: "70 lbs DBs", sets: 3, reps: "40 paces", targetReps: 40, unit: "paces", isStrength: true, tempo: "Smooth", cue: "Shoulders packed back, tall spine, firm grip.", videoQuery: "farmers walk exercise proper form" }
             ]
           },
           2: {
-            title: "Zone 2 Engine & Standing TPI Mobility",
+            title: "Zone 2 Engine & Standing Mobility",
             duration: "45–55 min",
             focus: "Mitochondrial biogenesis & golf thoracic arc width (100% off floor)",
             exercises: [
               { id: "m1d2_1", name: "Zone 2 Steady-State Cardio", targetWeight: "12% inc @ 3.0 mph", sets: 1, reps: "40–45 min", targetReps: 45, unit: "mins", isStrength: false, tempo: "Conversational", cue: "Incline treadmill walk (12% @ 2.8-3.2mph) or stationary bike. Nasal breathing.", videoQuery: "peter attia zone 2 cardio guide" },
-              { id: "m1d2_2", name: "Standing Club / Dowel T-Spine Rotations", targetWeight: "Golf Club / Dowel", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Club across shoulders in golf posture. Rotate shoulders fully while keeping hips steady.", videoQuery: "standing golf posture thoracic rotation club" },
-              { id: "m1d2_3", name: "Box-Supported Hamstring & Hip Floss", targetWeight: "Bodyweight (18\" Box)", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Smooth", cue: "Heel on box/bench in front. Hinge at hips with tall chest, flossing hamstrings without rounding back.", videoQuery: "standing hamstring stretch elevated on box" }
+              { id: "m1d2_2", name: "Standing Club Thoracic Rotations", targetWeight: "Golf Club / Dowel", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Club across shoulders in golf posture. Rotate shoulders fully while keeping hips steady.", videoQuery: "standing golf posture thoracic rotation club" },
+              { id: "m1d2_3", name: "Box-Supported Elephant Walk", targetWeight: "Bodyweight (18\" Box)", sets: 3, reps: "30 reps", targetReps: 30, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box/bench. Alternating knee pumps flossing sciatic nerve without touching floor.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "m1d2_4", name: "Standing Box-Elevated Psoas Opener", targetWeight: "Bodyweight (Box/Bench)", sets: 3, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Sustained", cue: "Back foot elevated on bench, standing tall. Opens tight psoas to eliminate lumbar pull.", videoQuery: "standing rear foot elevated hip flexor stretch" }
             ]
           },
           3: {
             title: "Full Body B: Hinge, Vertical Pull & Shoulder Drive",
             duration: "45–50 min",
-            focus: "Posterior chain hinge, lat pulldowns, overhead press & standing chops",
+            focus: "Posterior chain hinge, lat pulldowns, overhead press & standing rotational chops",
             exercises: [
               { id: "m1d3_1", name: "Dumbbell Romanian Deadlift (RDL)", targetWeight: "60 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Standing tall. Hinge hips back with soft knees, feel deep hamstring stretch, snap hips forward.", videoQuery: "dumbbell romanian deadlift proper form" },
-              { id: "m1d3_2", name: "Standing Dumbbell or Landmine Overhead Press", targetWeight: "45–50 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-0-1-0", cue: "Braced core, standing tall. Press overhead with zero lower back arching.", videoQuery: "standing dumbbell overhead press form" },
-              { id: "m1d3_3", name: "Lat Pulldown or Seated Cable Row", targetWeight: "140 lbs stack", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on machine/bench. Pull bar to upper chest, squeeze lats and scapulae.", videoQuery: "lat pulldown proper form cues" },
-              { id: "m1d3_4", name: "Dumbbell Box Step-Ups (16-18\" Box)", targetWeight: "35 lbs DBs", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Step onto box, drive entirely through top foot, stand tall without bouncing off bottom toe.", videoQuery: "dumbbell step up on box proper form" },
-              { id: "m1d3_5", name: "Standing Cable / Band Woodchops", targetWeight: "35 lbs / Band", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Dynamic", cue: "High-to-low diagonal chop in athletic stance. Pivot trailing foot to simulate golf swing release.", videoQuery: "standing cable woodchop high to low golf form" }
+              { id: "m1d3_2", name: "Dumbbell Box Step-Ups (16-18\" Box)", targetWeight: "35 lbs DBs", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Step onto box, drive entirely through top foot, stand tall without bouncing off bottom toe.", videoQuery: "dumbbell step up on box proper form" },
+              { id: "m1d3_3", name: "Standing Overhead DB / Landmine Press", targetWeight: "45–50 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-0-1-0", cue: "Braced core, standing tall. Press overhead with zero lower back arching.", videoQuery: "standing dumbbell overhead press form" },
+              { id: "m1d3_4", name: "Lat Pulldown or Seated Cable Row", targetWeight: "140 lbs stack", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on machine/bench. Pull bar to upper chest, squeeze lats and scapulae.", videoQuery: "lat pulldown proper form cues" },
+              { id: "m1d3_5", name: "Standing Cable Woodchop", targetWeight: "35 lbs / Band", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Dynamic", cue: "High-to-low diagonal chop in athletic stance. Pivot trailing foot to simulate golf swing release.", videoQuery: "standing cable woodchop high to low golf form" },
+              { id: "m1d3_6", name: "Standing Cable Pallof Press", targetWeight: "35 lbs / Black Band", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2s hold", cue: "Standing athletic stance. Resist rotational pull; brace core firmly.", videoQuery: "standing pallof press proper form" }
             ]
           },
           4: {
-            title: "Full Body C / Flush & Carries (Optional)",
+            title: "Full Body Recovery & Spinal Decompression (Optional)",
             duration: "40–45 min",
-            focus: "Active recovery, standing posture & heavy functional carries",
+            focus: "Active recovery, Jefferson curls, standing posture & heavy carries",
             exercises: [
               { id: "m1d4_1", name: "Outdoor Zone 2 Ruck or Incline Walk", targetWeight: "35 lbs Ruck / 12% inc", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Heart rate 60–70% max; sunshine and fresh air.", videoQuery: "zone 2 walking rucking benefits" },
-              { id: "m1d4_2", name: "Face Pulls with External Rotation (Standing)", targetWeight: "40 lbs stack", sets: 3, reps: "12–15 reps", targetReps: 15, isStrength: true, tempo: "2-1-1-0", cue: "Standing. Pull rope to forehead, elbows high, thumbs rotated back.", videoQuery: "standing face pulls with external rotation" },
-              { id: "m1d4_3", name: "Standing Heavy Suitcase Carry", targetWeight: "60 lbs DB", sets: 3, reps: "30 paces/side", targetReps: 30, unit: "paces", isStrength: true, tempo: "Upright", cue: "Single dumbbell at side. Walk completely upright with zero lateral tilt.", videoQuery: "suitcase carry core exercise form" }
+              { id: "m1d4_2", name: "Jefferson Curl", targetWeight: "30–40 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "4s down", cue: "Standing on flat ground or 4\" box. Tuck chin, roll down one vertebra at a time.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "m1d4_3", name: "Standing Cable Face Pulls", targetWeight: "40 lbs stack", sets: 3, reps: "12–15 reps", targetReps: 15, isStrength: true, tempo: "2-1-1-0", cue: "Standing. Pull rope to forehead, elbows high, thumbs rotated back.", videoQuery: "standing face pulls with external rotation" },
+              { id: "m1d4_4", name: "Standing Heavy Suitcase Carry", targetWeight: "60 lbs DB", sets: 3, reps: "30 paces/side", targetReps: 30, unit: "paces", isStrength: true, tempo: "Upright", cue: "Single dumbbell at side. Walk completely upright with zero lateral tilt.", videoQuery: "suitcase carry core exercise form" },
+              { id: "m1d4_5", name: "Hanging Spinal Decompression", targetWeight: "Bodyweight (45s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from pull-up bar, relax shoulders, let gravity decompress lumbar spine.", videoQuery: "dead hang for spine health and posture" }
             ]
           }
         }
       },
       2: {
-        title: "Month 2: Strength & Capacity Build (Full Body)",
-        theme: "Hypertrophy & Aerobic Base (Full Body - Off Floor)",
-        desc: "Progressive overload on full-body compounds, trap bar deadlifts, box step-ups, and standing rotation.",
+        title: "Month 2: Progressive Strength & Capacity Build",
+        theme: "Hypertrophy & Posterior Chain Overload",
+        desc: "Progressive overload on full-body compounds, trap bar deadlifts, box step-ups, and back extensions.",
         days: {
           1: {
-            title: "Full Body A: Trap Bar & Upper Hypertrophy",
+            title: "Full Body A: Trap Bar, Incline Press & Good Morning",
             duration: "45–55 min",
-            focus: "Full-body posterior chain, incline bench press & cable rows",
+            focus: "Full-body posterior chain, incline bench press, seated good mornings & QL raises",
             exercises: [
-              { id: "m2d1_1", name: "Trap Bar Deadlift (from Floor or Low Blocks)", targetWeight: "225–275 lbs", sets: 4, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Standing in center of hex bar. Chest up, push floor away with legs, lock glutes at top.", videoQuery: "trap bar deadlift form tutorial" },
-              { id: "m2d1_2", name: "Incline DB Chest Press (on Bench)", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Bench at 30° incline. Lower with control, press up with power.", videoQuery: "incline dumbbell bench press form" },
-              { id: "m2d1_3", name: "Seated Cable Row or Heavy DB Chest-Supported Row", targetWeight: "150 lbs stack / 65s DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Chest tall against support, drive elbows back, pinch shoulder blades.", videoQuery: "chest supported dumbbell row on incline bench" },
-              { id: "m2d1_4", name: "Goblet Box Squats (Pause on Box)", targetWeight: "70 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "1-second pause on 16\" box, maintain torso tension, explode up.", videoQuery: "paused box squat proper form" },
-              { id: "m2d1_5", name: "Standing Cable Anti-Rotation Press & Hold", targetWeight: "40 lbs stack", sets: 3, reps: "8 reps/side (5s hold)", targetReps: 8, isStrength: true, tempo: "5s hold", cue: "Press handle forward from chest, hold 5 seconds resisting rotation.", videoQuery: "pallof press hold 5 seconds form" }
+              { id: "m2d1_1", name: "Trap Bar Deadlift", targetWeight: "225–275 lbs", sets: 4, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Standing in center of hex bar. Chest up, push floor away with legs, lock glutes at top.", videoQuery: "trap bar deadlift form tutorial" },
+              { id: "m2d1_2", name: "Incline DB Chest Press", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Bench at 30° incline. Lower with control, press up with power.", videoQuery: "incline dumbbell bench press form" },
+              { id: "m2d1_3", name: "Seated Good Morning (Loaded)", targetWeight: "55–65 lbs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench/box with wide stance. Deep hip hinge depth, drive up strong.", videoQuery: "seated good morning low back ability form brendan backstrom" },
+              { id: "m2d1_4", name: "Chest-Supported DB Row or Seated Cable Row", targetWeight: "150 lbs stack / 65s DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Chest tall against support, drive elbows back.", videoQuery: "chest supported dumbbell row on incline bench" },
+              { id: "m2d1_5", name: "45° Back Extension (Weighted)", targetWeight: "BW + 35 lbs plate", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "On 45° bench. Hold plate at chest, curl & uncurl.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "m2d1_6", name: "Dumbbell QL Raise", targetWeight: "35–45 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Standing side bend or on 45° bench. Elevate ribcage laterally from bottom stretch.", videoQuery: "ql raise low back ability form brendan backstrom" }
             ]
           },
           2: {
             title: "Zone 2 + Norwegian Surge Intro",
             duration: "50 min",
-            focus: "Mitochondrial capacity + standing mobility resets",
+            focus: "Mitochondrial capacity, introductory intervals & standing nerve flossing",
             exercises: [
               { id: "m2d2_1", name: "Zone 2 Steady State (Bike/Treadmill)", targetWeight: "Zone 2 HR (125-135)", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Steady", cue: "Keep heart rate strictly in Zone 2 (talking pace).", videoQuery: "how to do zone 2 cardio properly" },
-              { id: "m2d2_2", name: "Introductory VO2 Max Surges (Bike or Incline)", targetWeight: "VO2 Max Sprint (>85% HR)", sets: 4, reps: "60s hard / 90s easy", targetReps: 4, unit: "rounds", isStrength: false, tempo: "RPE 8.5", cue: "60s high-intensity surge followed by 90s easy recovery spin.", videoQuery: "vo2 max sprint interval training" },
-              { id: "m2d2_3", name: "Box-Supported Standing Pigeon & Hip Swivels", targetWeight: "18\" Box / Bench", sets: 2, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Slow", cue: "Leg rested on bench at 90°, swivel pelvis to open hip capsule standing.", videoQuery: "standing pigeon stretch on bench box" }
+              { id: "m2d2_2", name: "Introductory VO2 Max Surges", targetWeight: "VO2 Max Sprint (>85% HR)", sets: 4, reps: "60s hard / 90s easy", targetReps: 4, unit: "rounds", isStrength: false, tempo: "RPE 8.5", cue: "60s high-intensity sprint effort followed by 90s recovery spin on bike or incline.", videoQuery: "vo2 max sprint interval training" },
+              { id: "m2d2_3", name: "Box-Supported Elephant Walk", targetWeight: "Bodyweight Floss", sets: 3, reps: "35 reps", targetReps: 35, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box. Alternating knee extensions flossing sciatic nerve.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "m2d2_4", name: "Standing Box Pigeon & Hip Swivels", targetWeight: "18\" Box / Bench", sets: 2, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Slow", cue: "Leg rested on bench at 90°, swivel pelvis to open hip capsule standing.", videoQuery: "standing pigeon stretch on bench box" }
             ]
           },
           3: {
-            title: "Full Body B: Single-Leg Box Drive & Overhead Power",
+            title: "Full Body B: Box Squats, Overhead Press & Pulldowns",
             duration: "45–55 min",
-            focus: "Unilateral leg strength, vertical pulling & overhead pressing",
+            focus: "Paused squat power, vertical pulling, overhead pressing & standing rotation",
             exercises: [
-              { id: "m2d3_1", name: "Dumbbell Box Step-Ups (16-18\" Box)", targetWeight: "45 lbs DBs", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Drive entirely through heel on box, squeeze glute at top.", videoQuery: "dumbbell box step up form cues" },
-              { id: "m2d3_2", name: "Lat Pulldown or Neutral Grip Pull-Ups", targetWeight: "150 lbs stack / BW", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Drive elbows into ribcage, full stretch at top.", videoQuery: "lat pulldown proper form cues" },
-              { id: "m2d3_3", name: "Standing Overhead DB / Landmine Press", targetWeight: "50 lbs DBs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Glutes squeezed, press overhead cleanly.", videoQuery: "standing dumbbell overhead press form" },
-              { id: "m2d3_4", name: "Dumbbell Romanian Deadlift (RDL)", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Hips back, feel hamstrings load, snap tall.", videoQuery: "dumbbell romanian deadlift proper form" },
-              { id: "m2d3_5", name: "Heavy Suitcase Carry (Single-Arm DB)", targetWeight: "65 lbs DB", sets: 3, reps: "35 paces/side", targetReps: 35, unit: "paces", isStrength: true, tempo: "Braced", cue: "Maximum anti-lateral flexion core activation.", videoQuery: "heavy suitcase carry proper form" }
+              { id: "m2d3_1", name: "Goblet Box Squats (Pause on Box)", targetWeight: "70 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "1-second pause on 16\" box, maintain torso tension, explode up.", videoQuery: "paused box squat proper form" },
+              { id: "m2d3_2", name: "Dumbbell Box Step-Ups (16-18\" Box)", targetWeight: "45 lbs DBs", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Drive entirely through heel on box, squeeze glute at top.", videoQuery: "dumbbell box step up form cues" },
+              { id: "m2d3_3", name: "Standing Overhead DB / Landmine Press", targetWeight: "50 lbs DBs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Glutes squeezed, press overhead cleanly without arching back.", videoQuery: "standing dumbbell overhead press form" },
+              { id: "m2d3_4", name: "Lat Pulldown or Neutral Grip Pull-Ups", targetWeight: "150 lbs stack / BW", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Drive elbows into ribcage, full stretch at top.", videoQuery: "lat pulldown proper form cues" },
+              { id: "m2d3_5", name: "Standing Low-to-High Cable Woodchop", targetWeight: "40 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Crisp", cue: "Diagonal whip across chest with locked pelvis.", videoQuery: "half kneeling cable lift low to high" },
+              { id: "m2d3_6", name: "Heavy Suitcase Carry", targetWeight: "65 lbs DB", sets: 3, reps: "35 paces/side", targetReps: 35, unit: "paces", isStrength: true, tempo: "Braced", cue: "Maximum anti-lateral flexion core activation.", videoQuery: "heavy suitcase carry proper form" }
             ]
           },
           4: {
             title: "Full Body Functional Power & Carries (Optional)",
             duration: "40–45 min",
-            focus: "Standing med ball work, arm carries & aerobic flush",
+            focus: "Standing med ball work, Jefferson curls & heavy carries",
             exercises: [
               { id: "m2d4_1", name: "Standing Med Ball Chest Passes (Wall)", targetWeight: "12–14 lbs Ball", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Explosive", cue: "Standing athletic stance. Push explosively into concrete wall.", videoQuery: "explosive medicine ball chest pass against wall" },
-              { id: "m2d4_2", name: "Heavy Farmer's Walk", targetWeight: "75 lbs DBs", sets: 3, reps: "35 paces", targetReps: 35, unit: "paces", isStrength: true, tempo: "Steady", cue: "Tall posture, no leaning, maximum grip load.", videoQuery: "heavy farmers carry form cues" },
-              { id: "m2d4_3", name: "Zone 2 Incline Walk / Light Jog", targetWeight: "Zone 2 Active Recovery", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Easy aerobic active recovery.", videoQuery: "zone 2 heart rate training" }
+              { id: "m2d4_2", name: "Jefferson Curl", targetWeight: "35–45 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Slow vertebrae articulation standing on box/floor.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "m2d4_3", name: "Heavy Farmer's Walk", targetWeight: "75 lbs DBs", sets: 3, reps: "35 paces", targetReps: 35, unit: "paces", isStrength: true, tempo: "Steady", cue: "Tall posture, no leaning, maximum grip load.", videoQuery: "heavy farmers carry form cues" },
+              { id: "m2d4_4", name: "Hanging Spinal Decompression", targetWeight: "Bodyweight (45s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from pull-up bar, relax shoulders, let gravity decompress spine.", videoQuery: "dead hang for spine health and posture" }
             ]
           }
         }
       },
       3: {
-        title: "Month 3: Power & Peak VO2 Max (Full Body)",
-        theme: "Rate of Force Development & VO2 Peak (Full Body - Off Floor)",
+        title: "Month 3: Power & Peak VO2 Max",
+        theme: "Rate of Force Development & VO2 Peak",
         desc: "Explosive kettlebell swings, heavy box squats, standing med ball rotation, and Norwegian 4x4 intervals.",
         days: {
           1: {
-            title: "Full Body A: Explosive Hinge, Squat & Press",
+            title: "Full Body A: Kettlebell Swings, Box Squat & Bench",
             duration: "45–55 min",
-            focus: "Hip snap velocity, box squats & heavy pressing",
+            focus: "Hip snap velocity, box squats, heavy pressing & seated good mornings",
             exercises: [
-              { id: "m3d1_1", name: "Kettlebell Swings (Hardstyle Standing)", targetWeight: "53–70 lbs KB", sets: 4, reps: "12 reps", targetReps: 12, isStrength: true, tempo: "Explosive", cue: "Standing tall. Sharp hip snap, float kettlebell to chest height, lock glutes.", videoQuery: "kettlebell swing hardstyle proper form" },
+              { id: "m3d1_1", name: "Kettlebell Swings (Hardstyle Standing)", targetWeight: "53–70 lbs KB", sets: 4, reps: "12 reps", targetReps: 12, isStrength: true, tempo: "Explosive", cue: "Standing tall. Sharp hip snap, float kettlebell to chest, brace glutes.", videoQuery: "kettlebell swing hardstyle proper form" },
               { id: "m3d1_2", name: "Dumbbell Box Front Squat (to 16\" Box)", targetWeight: "55 lbs DBs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "DBs racked at shoulders, sit back to box, explode up.", videoQuery: "dumbbell front box squat form" },
-              { id: "m3d1_3", name: "Incline DB Bench Press (on Bench)", targetWeight: "70 lbs DBs", sets: 3, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "2-1-1-0", cue: "Controlled lowering, explosive press.", videoQuery: "incline dumbbell bench press heavy form" },
-              { id: "m3d1_4", name: "Single-Arm Cable Row w/ Torso Rotation", targetWeight: "65 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Dynamic", cue: "Standing in athletic stance. Pull handle, slight torso rotation.", videoQuery: "single arm rotational cable row form" },
-              { id: "m3d1_5", name: "Rotational Med Ball Wall Throws (Standing)", targetWeight: "12–14 lbs Ball", sets: 4, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Max Intent", cue: "Standing in golf stance. Transfer energy from back hip through torso into wall.", videoQuery: "rotational medicine ball scoop toss wall golf" }
+              { id: "m3d1_3", name: "Incline DB Bench Press", targetWeight: "70 lbs DBs", sets: 3, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "2-1-1-0", cue: "Heavy controlled lower, explosive press.", videoQuery: "incline dumbbell bench press heavy form" },
+              { id: "m3d1_4", name: "Seated Good Morning (Loaded)", targetWeight: "55–65 lbs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench/box. Drive up through adductors and spinal erectors.", videoQuery: "seated good morning low back ability form" },
+              { id: "m3d1_5", name: "Single-Arm Cable Row w/ Torso Rotation", targetWeight: "65 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Dynamic", cue: "Standing. Rotate torso slightly into row to mimic follow-through.", videoQuery: "single arm rotational cable row form" },
+              { id: "m3d1_6", name: "Rotational Med Ball Wall Throws", targetWeight: "12–14 lbs Ball", sets: 4, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Max Intent", cue: "Standing in golf stance. Transfer energy from back hip through torso into wall.", videoQuery: "rotational medicine ball scoop toss wall golf" }
             ]
           },
           2: {
@@ -692,48 +657,52 @@
             exercises: [
               { id: "m3d2_1", name: "Warm-Up (Easy Spin / Incline Walk)", targetWeight: "Zone 2 Pace", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Gradual ramp", cue: "Gradually raise heart rate to top of Zone 2.", videoQuery: "how to warm up for vo2 max intervals" },
               { id: "m3d2_2", name: "Norwegian 4×4 Protocol (Attia/Patrick)", targetWeight: "HR 160–175 bpm (90-95%)", sets: 4, reps: "4m Work / 3m Rest", targetReps: 4, unit: "intervals", isStrength: false, tempo: "RPE 9.0", cue: "4 min @ 90-95% Max HR on bike or incline treadmill, followed by 3 min easy Zone 1 recovery walk. Repeat 4 total times.", videoQuery: "norwegian 4x4 interval training peter attia" },
-              { id: "m3d2_3", name: "Standing Cool-Down & Box Breathing", targetWeight: "Nasal Breathing", sets: 1, reps: "8 min", targetReps: 8, unit: "mins", isStrength: false, tempo: "Down-regulate", cue: "Slow walking + 4s inhale, 4s hold, 4s exhale, 4s hold.", videoQuery: "box breathing technique andrew huberman" }
+              { id: "m3d2_3", name: "Box-Supported Elephant Walk", targetWeight: "Bodyweight Floss", sets: 3, reps: "40 reps", targetReps: 40, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box. Floss nervous system after intense intervals.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "m3d2_4", name: "Standing Box Breathing", targetWeight: "Nasal Breathing", sets: 1, reps: "8 min", targetReps: 8, unit: "mins", isStrength: false, tempo: "Down-regulate", cue: "Slow walking + 4s inhale, 4s hold, 4s exhale, 4s hold.", videoQuery: "box breathing technique andrew huberman" }
             ]
           },
           3: {
-            title: "Full Body B: Trap Bar, Pull-Up & Lateral Drive",
+            title: "Full Body B: Trap Bar, 45° Back Extension & Overhead Drive",
             duration: "45–55 min",
             focus: "Maximal deadlift strength, vertical pull & standing rotational power",
             exercises: [
               { id: "m3d3_1", name: "Heavy Trap Bar Deadlift", targetWeight: "245–295 lbs", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "3-1-1-0", cue: "Solid foot stance, push through heels, lockout hips.", videoQuery: "trap bar deadlift form tutorial" },
-              { id: "m3d3_2", name: "Lat Pulldown or Weighted Pull-Ups", targetWeight: "160 lbs stack / BW", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-1-1-0", cue: "Drive elbows straight down, hold 1 second at chest.", videoQuery: "lat pulldown proper form cues" },
-              { id: "m3d3_3", name: "Standing Landmine Push Press", targetWeight: "+55 lbs on Bar", sets: 3, reps: "6 reps/side", targetReps: 6, isStrength: true, tempo: "Explosive", cue: "Standing athletic stance. Dip hips and punch bar up explosively.", videoQuery: "landmine push press explosive exercise" },
-              { id: "m3d3_4", name: "Dumbbell Box Step-Ups (18\" Box)", targetWeight: "45 lbs DBs", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Power", cue: "Explode onto box, full hip extension at top.", videoQuery: "dumbbell step up on box proper form" },
-              { id: "m3d3_5", name: "Standing High-to-Low Cable Woodchop", targetWeight: "40 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Speed", cue: "Full torso rotation, deceleration control on return.", videoQuery: "cable woodchoppers high to low golf form" }
+              { id: "m3d3_2", name: "45° Back Extension (Weighted)", targetWeight: "BW + 45 lbs plate", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "On 45° bench. Erector power, full control at lockout.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "m3d3_3", name: "Lat Pulldown or Weighted Pull-Ups", targetWeight: "160 lbs stack / BW", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-1-1-0", cue: "Drive elbows straight down, hold 1 second at chest.", videoQuery: "lat pulldown proper form cues" },
+              { id: "m3d3_4", name: "Standing Landmine Push Press", targetWeight: "+55 lbs on Bar", sets: 3, reps: "6 reps/side", targetReps: 6, isStrength: true, tempo: "Explosive", cue: "Standing athletic stance. Dip hips and punch bar up explosively.", videoQuery: "landmine push press explosive exercise" },
+              { id: "m3d3_5", name: "Dumbbell Box Step-Ups (18\" Box)", targetWeight: "45 lbs DBs", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Power", cue: "Explode onto box, full hip extension at top.", videoQuery: "dumbbell step up on box proper form" },
+              { id: "m3d3_6", name: "Standing High-to-Low Cable Woodchop", targetWeight: "40 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Speed", cue: "Full torso rotation, deceleration control on return.", videoQuery: "cable woodchoppers high to low golf form" }
             ]
           },
           4: {
             title: "Full Body Regeneration & Heavy Carries (Optional)",
             duration: "45–50 min",
-            focus: "Endurance foundation & heavy grip carries",
+            focus: "Endurance foundation, Jefferson curls & heavy grip carries",
             exercises: [
               { id: "m3d4_1", name: "Zone 2 Incline Ruck or Trail Walk", targetWeight: "35 lbs Ruck", sets: 1, reps: "45 min", targetReps: 45, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Steady, rhythmic aerobic conditioning.", videoQuery: "zone 2 rucking benefits" },
-              { id: "m3d4_2", name: "Heavy Farmer's Walk", targetWeight: "80 lbs DBs", sets: 4, reps: "30 paces", targetReps: 30, unit: "paces", isStrength: true, tempo: "Heavy", cue: "Maximum grip load, tall posture, steady breath.", videoQuery: "heavy farmers carry form cues" },
-              { id: "m3d4_3", name: "Standing Cable Face Pulls", targetWeight: "45 lbs stack", sets: 3, reps: "15 reps", targetReps: 15, isStrength: true, tempo: "Squeeze", cue: "Thumbs back, external shoulder rotation.", videoQuery: "face pulls with external rotation athlean x" }
+              { id: "m3d4_2", name: "Jefferson Curl", targetWeight: "40–45 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Standing on box/floor. Slow spinal rolling flexion.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "m3d4_3", name: "Heavy Farmer's Walk", targetWeight: "80 lbs DBs", sets: 4, reps: "30 paces", targetReps: 30, unit: "paces", isStrength: true, tempo: "Heavy", cue: "Maximum grip load, tall posture, steady breath.", videoQuery: "heavy farmers carry form cues" },
+              { id: "m3d4_4", name: "Hanging Spinal Decompression", targetWeight: "Bodyweight (45s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from pull-up bar, relax shoulders, decompress lumbar discs.", videoQuery: "dead hang for spine health and posture" }
             ]
           }
         }
       },
       4: {
-        title: "Month 4: Speed & Peak Integration (Full Body)",
-        theme: "Rotational Speed & Clubhead Velocity (Full Body - Off Floor)",
+        title: "Month 4: Speed & Peak Integration",
+        theme: "Rotational Speed & Clubhead Velocity",
         desc: "Contrast power complexes, max-intent rotational med ball throws, and speed training.",
         days: {
           1: {
-            title: "Full Body A: Contrast Power & Speed Throws",
+            title: "Full Body A: Contrast Power, QL Lock & Speed Throws",
             duration: "45–50 min",
             focus: "Heavy trap bar to box jump contrast, bench press & speed throws",
             exercises: [
               { id: "m4d1_1", name: "Heavy Trap Bar Deadlift + Box Jump", targetWeight: "275–315 lbs", sets: 4, reps: "4 reps + 3 box jumps", targetReps: 4, isStrength: true, tempo: "Contrast", cue: "Heavy deadlift followed immediately by landing on 20\" box.", videoQuery: "contrast training trap bar deadlift vertical jump" },
               { id: "m4d1_2", name: "Standing Step-and-Hit Med Ball Throws", targetWeight: "10–12 lbs Ball", sets: 4, reps: "5 throws/side", targetReps: 5, isStrength: true, tempo: "Max Speed", cue: "Step onto lead foot standing and whip ball into concrete wall.", videoQuery: "step and hit medicine ball rotational throw golf" },
-              { id: "m4d1_3", name: "Incline DB Chest Press (on Bench)", targetWeight: "75 lbs DBs", sets: 3, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "Explosive", cue: "Heavy pressing power for torso stiffness.", videoQuery: "incline dumbbell bench press heavy form" },
-              { id: "m4d1_4", name: "Single-Arm Heavy DB Row (on Bench)", targetWeight: "70 lbs DB", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "One hand on bench, pull forcefully to hip.", videoQuery: "single arm dumbbell row proper form" },
-              { id: "m4d1_5", name: "Heavy Single-Arm Suitcase Carry", targetWeight: "70 lbs DB", sets: 3, reps: "40 paces/side", targetReps: 40, unit: "paces", isStrength: true, tempo: "Solid", cue: "Core bracing under maximum unilateral load.", videoQuery: "heavy suitcase carry form" }
+              { id: "m4d1_3", name: "Incline DB Chest Press", targetWeight: "75 lbs DBs", sets: 3, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "Explosive", cue: "Heavy pressing power for torso stiffness.", videoQuery: "incline dumbbell bench press heavy form" },
+              { id: "m4d1_4", name: "Seated Good Morning", targetWeight: "55–65 lbs", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Smooth", cue: "Seated on bench/box. Adductor opening and hip hinge mastery.", videoQuery: "seated good morning low back ability form" },
+              { id: "m4d1_5", name: "Dumbbell QL Raise", targetWeight: "40–45 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Strict", cue: "Standing lateral flexion for bulletproof stability.", videoQuery: "ql raise low back ability form brendan backstrom" },
+              { id: "m4d1_6", name: "Heavy Single-Arm Suitcase Carry", targetWeight: "70 lbs DB", sets: 3, reps: "40 paces/side", targetReps: 40, unit: "paces", isStrength: true, tempo: "Solid", cue: "Core bracing under maximum unilateral load.", videoQuery: "heavy suitcase carry form" }
             ]
           },
           2: {
@@ -743,7 +712,8 @@
             exercises: [
               { id: "m4d2_1", name: "Zone 2 Cardiovascular Base", targetWeight: "Zone 2 Cardio", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Incline walk or cycling at conversational heart rate.", videoQuery: "peter attia zone 2 training explanation" },
               { id: "m4d2_2", name: "Overspeed Swing / Speed Stick Drills", targetWeight: "+8–12 mph Swing Speed", sets: 3, reps: "10 swings each side", targetReps: 10, isStrength: true, tempo: "Max effort", cue: "Standing golf posture. 10 swings dominant, 10 swings non-dominant.", videoQuery: "superspeed golf speed sticks training protocol" },
-              { id: "m4d2_3", name: "Standing Lat & Thoracic Club Mobility", targetWeight: "Golf Club / Dowel", sets: 2, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Slow", cue: "Standing rotations and lat stretch.", videoQuery: "standing golf posture thoracic rotation club" }
+              { id: "m4d2_3", name: "Box-Supported Elephant Walk", targetWeight: "Bodyweight Floss", sets: 3, reps: "35 reps", targetReps: 35, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box. Floss hamstrings and lumbar fascia.", videoQuery: "elephant walk exercise low back ability" },
+              { id: "m4d2_4", name: "Standing Lat & Thoracic Club Mobility", targetWeight: "Golf Club / Dowel", sets: 2, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Slow", cue: "Standing rotations and lat stretch.", videoQuery: "standing golf posture thoracic rotation club" }
             ]
           },
           3: {
@@ -751,11 +721,12 @@
             duration: "45–50 min",
             focus: "Arm whip speed, lat pull & rotational deceleration",
             exercises: [
-              { id: "m4d3_1", name: "Standing Landmine Push Press (Explosive)", targetWeight: "+60 lbs on Bar", sets: 4, reps: "5 reps/side", targetReps: 5, isStrength: true, tempo: "Explosive", cue: "Dip hips standing and drive barbell forcefully overhead.", videoQuery: "landmine push press explosive exercise" },
+              { id: "m4d3_1", name: "Standing Landmine Push Press", targetWeight: "+60 lbs on Bar", sets: 4, reps: "5 reps/side", targetReps: 5, isStrength: true, tempo: "Explosive", cue: "Dip hips standing and drive barbell forcefully overhead.", videoQuery: "landmine push press explosive exercise" },
               { id: "m4d3_2", name: "Weighted Pull-Ups or Heavy Seated Cable Rows", targetWeight: "170 lbs Row / BW+25", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-0-1-0", cue: "Strong upper back and lat recruitment.", videoQuery: "seated cable row proper form lat focus" },
-              { id: "m4d3_3", name: "Dumbbell Box Step-Ups with Knee Drive", targetWeight: "40 lbs DBs", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Fast", cue: "Step onto 18\" box, drive opposite knee high at top.", videoQuery: "explosive dumbbell step up with knee drive" },
-              { id: "m4d3_4", name: "Standing High-to-Low Cable Speed Chops", targetWeight: "40 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Fast", cue: "Max rotational acceleration with clean deceleration.", videoQuery: "speed cable woodchop rotational power" },
-              { id: "m4d3_5", name: "Standing Pallof Press w/ Overhead Raise", targetWeight: "35 lbs / Band", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Controlled", cue: "Press band out standing, raise overhead without leaning.", videoQuery: "standing pallof press overhead raise" }
+              { id: "m4d3_3", name: "45° Back Extension (Weighted)", targetWeight: "BW + 45 lbs plate", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "On 45° bench. Erector endurance and glute lockout.", videoQuery: "45 degree back extension low back ability form" },
+              { id: "m4d3_4", name: "Dumbbell Box Step-Ups with Knee Drive", targetWeight: "40 lbs DBs", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Fast", cue: "Step onto 18\" box, drive opposite knee high at top.", videoQuery: "explosive dumbbell step up with knee drive" },
+              { id: "m4d3_5", name: "Standing High-to-Low Cable Speed Chops", targetWeight: "40 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Fast", cue: "Max rotational acceleration with clean deceleration.", videoQuery: "speed cable woodchop rotational power" },
+              { id: "m4d3_6", name: "Standing Pallof Press w/ Overhead Raise", targetWeight: "35 lbs / Band", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Controlled", cue: "Press band out standing, raise overhead without leaning.", videoQuery: "standing pallof press overhead raise" }
             ]
           },
           4: {
@@ -764,274 +735,17 @@
             focus: "Cardiovascular flush & standing decompression",
             exercises: [
               { id: "m4d4_1", name: "30s/30s High-Intensity Interval Flush", targetWeight: ">450 Watts / All Out", sets: 8, reps: "30s Max / 30s Rest", targetReps: 8, unit: "rounds", isStrength: false, tempo: "All Out", cue: "Air bike or sprint on incline treadmill.", videoQuery: "30 30 interval workout vo2 max" },
-              { id: "m4d4_2", name: "Zone 2 Extended Cool-Down", targetWeight: "Zone 1-2 Flush", sets: 1, reps: "20 min", targetReps: 20, unit: "mins", isStrength: false, tempo: "Zone 1-2", cue: "Flush lactate, restore resting heart rate.", videoQuery: "zone 2 cool down active recovery" },
-              { id: "m4d4_3", name: "Standing Box/Bench Pigeon & T-Spine Reset", targetWeight: "Relaxed Breathing", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Deep breath", cue: "Shin on bench hip opener, standing thoracic breathing.", videoQuery: "standing pigeon stretch on bench box" }
+              { id: "m4d4_2", name: "Jefferson Curl", targetWeight: "40–50 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Standing on box/floor. Spinal segmentation and hamstring length.", videoQuery: "jefferson curl proper form low back ability" },
+              { id: "m4d4_3", name: "Zone 2 Extended Cool-Down", targetWeight: "Zone 1-2 Flush", sets: 1, reps: "20 min", targetReps: 20, unit: "mins", isStrength: false, tempo: "Zone 1-2", cue: "Flush lactate, restore resting heart rate.", videoQuery: "zone 2 cool down active recovery" },
+              { id: "m4d4_4", name: "Hanging Spinal Decompression", targetWeight: "Bodyweight (45-60s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from pull-up bar, relax shoulders, decompress lumbar discs.", videoQuery: "dead hang for spine health and posture" }
             ]
           }
         }
       }
     };
 
-    // ==========================================
-    // 1B. LOW BACK ABILITY (LBA) - FULL BODY OFF-THE-FLOOR
-    // ==========================================
-    const MONTHS_DATA_LBA = {
-      1: {
-        title: "Month 1: Re-Conditioning & LBA Base (Full Body)",
-        theme: "Lumbar Bulletproofing & Full Body (100% Off Floor)",
-        desc: "Full-body training combining Box Squats, Bench-Seated Good Mornings, QL Raises, and DB pressing.",
-        days: {
-          1: {
-            title: "Full Body A: Box Squat, Seated Good Morning & Press",
-            duration: "45–50 min",
-            focus: "Ground force, lumbar resilience, pressing & rowing (seated on box/bench)",
-            exercises: [
-              { id: "lba1_1", name: "Goblet Box Squat (to 16-18\" Box)", targetWeight: "65 lbs DB", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Sit back to box with control, upright torso, full glute drive to stand.", videoQuery: "goblet box squat proper form tutorial" },
-              { id: "lba1_2", name: "Low Back Ability: Bench-Seated Good Morning", targetWeight: "45–55 lbs DB/Bar", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench/box with wide stance. Hinge deep at hips with tall spine, bulletproofing lower back.", videoQuery: "seated good morning low back ability form brendan backstrom" },
-              { id: "lba1_3", name: "Dumbbell Flat or Incline Bench Press", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "On bench. Elbows at 45°, full chest press.", videoQuery: "dumbbell bench press proper form" },
-              { id: "lba1_4", name: "Single-Arm Dumbbell Row (Hand on Bench)", targetWeight: "60 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Braced on bench. Pull DB toward hip pocket, pause at top.", videoQuery: "single arm dumbbell row proper form" },
-              { id: "lba1_5", name: "Low Back Ability: Standing Dumbbell QL Raise", targetWeight: "30–35 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Standing side bend or on 45° back extension bench. Strengthens QL against swing spasms.", videoQuery: "ql raise low back ability form brendan backstrom" }
-            ]
-          },
-          2: {
-            title: "Zone 2 Engine & Standing LBA Sciatic Floss",
-            duration: "45–55 min",
-            focus: "Mitochondrial biogenesis & posterior chain nerve flossing (off floor)",
-            exercises: [
-              { id: "lba1_2_1", name: "Zone 2 Steady-State Cardio", targetWeight: "12% inc @ 3.0 mph", sets: 1, reps: "40–45 min", targetReps: 45, unit: "mins", isStrength: false, tempo: "Conversational", cue: "Incline treadmill walk or stationary bike. Nasal breathing.", videoQuery: "peter attia zone 2 cardio guide" },
-              { id: "lba1_2_2", name: "Box-Supported Elephant Walk (Hands on Box)", targetWeight: "Bodyweight (18\" Box)", sets: 3, reps: "30 reps", targetReps: 30, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box/bench. Alternating knee pumps flossing sciatic nerve without touching floor.", videoQuery: "elephant walk exercise low back ability" },
-              { id: "lba1_2_3", name: "Standing Box-Elevated Psoas / Hip Flexor Opener", targetWeight: "Bodyweight (Box/Bench)", sets: 3, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Sustained", cue: "Back foot elevated on bench, standing tall. Opens tight psoas to eliminate lumbar pull.", videoQuery: "standing rear foot elevated hip flexor stretch" },
-              { id: "lba1_2_4", name: "Standing Club / Dowel T-Spine Rotations", targetWeight: "Golf Club / Dowel", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: false, tempo: "Controlled", cue: "Standing in golf posture. Rotate shoulders fully while keeping hips steady.", videoQuery: "standing golf posture thoracic rotation club" }
-            ]
-          },
-          3: {
-            title: "Full Body B: Trap Bar, Back Extension & Overhead Drive",
-            duration: "45–50 min",
-            focus: "Posterior chain hinge, 45° bench erectors, lat pulldown & overhead press",
-            exercises: [
-              { id: "lba1_3_1", name: "Trap Bar Deadlift (or Heavy DB RDL)", targetWeight: "225–275 lbs", sets: 4, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Standing tall. Drive feet through floor, squeeze glutes at top lockout.", videoQuery: "trap bar deadlift form tutorial" },
-              { id: "lba1_3_2", name: "Low Back Ability: 45° Back Extension (Bench)", targetWeight: "BW + 25 lbs plate", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "On 45° back extension bench. Segmented curl and uncurl of spinal erectors, pause at top.", videoQuery: "45 degree back extension low back ability form" },
-              { id: "lba1_3_3", name: "Lat Pulldown or Seated Cable Row", targetWeight: "140 lbs stack", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated. Pull bar to upper chest, full stretch at top.", videoQuery: "lat pulldown proper form cues" },
-              { id: "lba1_3_4", name: "Standing Overhead DB / Landmine Press", targetWeight: "45–50 lbs DBs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Standing tall. Core locked tight, press overhead without arching lower back.", videoQuery: "standing dumbbell overhead press form" },
-              { id: "lba1_3_5", name: "Dumbbell Box Step-Ups (16-18\" Box)", targetWeight: "35 lbs DBs", sets: 3, reps: "8 reps/leg", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Drive through lead heel on box, stand tall, controlled descent.", videoQuery: "dumbbell step up on box proper form" }
-            ]
-          },
-          4: {
-            title: "LBA Bulletproof Spine & Restoration (Optional)",
-            duration: "40–45 min",
-            focus: "Spinal decompression, Jefferson curls & standing carries",
-            exercises: [
-              { id: "lba1_4_1", name: "Low Back Ability: Bench-Seated Good Morning", targetWeight: "45–55 lbs", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Slow", cue: "Seated on bench/box. Deep adductor stretch and loaded lumbar extension.", videoQuery: "seated good morning low back ability form" },
-              { id: "lba1_4_2", name: "Low Back Ability: Standing Jefferson Curl", targetWeight: "30–40 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "4s down", cue: "Standing on flat ground or 4\" box. Tuck chin, roll down one vertebra at a time.", videoQuery: "jefferson curl proper form low back ability" },
-              { id: "lba1_4_3", name: "Farmer's Walk (DBs or Kettlebells)", targetWeight: "70 lbs DBs", sets: 3, reps: "40 paces", targetReps: 40, unit: "paces", isStrength: true, tempo: "Smooth", cue: "Shoulders packed back, tall spine, firm grip.", videoQuery: "farmers walk exercise proper form" },
-              { id: "lba1_4_4", name: "Hanging Spinal Decompression (Pull-Up Bar)", targetWeight: "Bodyweight (45s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from pull-up bar, relax shoulders, let gravity decompress lumbar spine.", videoQuery: "dead hang for spine health and posture" }
-            ]
-          }
-        }
-      },
-      2: {
-        title: "Month 2: Build & LBA Progressive Overload (Full Body)",
-        theme: "Hypertrophy & Lumbar Resilience (Full Body - Off Floor)",
-        desc: "Increasing load on Full Body compounds, Seated Good Mornings, and QL raises without floor work.",
-        days: {
-          1: {
-            title: "Full Body A: Box Squat, Good Morning & Incline Press",
-            duration: "45–55 min",
-            focus: "Squat power, loaded hip hinge, upper pressing & standing QL",
-            exercises: [
-              { id: "lba2_1", name: "Goblet Box Squats (Pause on Box)", targetWeight: "70 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "1-second pause on 16\" box, maintain torso tension, explode up.", videoQuery: "paused box squat proper form" },
-              { id: "lba2_2", name: "Low Back Ability: Loaded Seated Good Morning", targetWeight: "55–65 lbs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench/box with wide stance. Deep hip hinge depth, drive up strong.", videoQuery: "seated good morning low back ability form brendan backstrom" },
-              { id: "lba2_3", name: "Incline DB Chest Press (on Bench)", targetWeight: "65 lbs DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "On 30° incline bench. Full chest stretch and contraction.", videoQuery: "incline dumbbell bench press form" },
-              { id: "lba2_4", name: "Seated Cable Row or Chest-Supported DB Row", targetWeight: "150 lbs stack / 65s DBs", sets: 3, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Chest tall against support, drive elbows back.", videoQuery: "chest supported dumbbell row on incline bench" },
-              { id: "lba2_5", name: "Low Back Ability: QL Raise (45° Bench or Standing DB)", targetWeight: "35–45 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Elevate ribcage laterally from bottom stretch.", videoQuery: "ql raise low back ability form brendan backstrom" }
-            ]
-          },
-          2: {
-            title: "Zone 2 + Norwegian Surges & Standing Sciatic Floss",
-            duration: "50 min",
-            focus: "Mitochondrial capacity + standing nerve flossing",
-            exercises: [
-              { id: "lba2_2_1", name: "Zone 2 Steady State (Bike/Treadmill)", targetWeight: "Zone 2 HR (125-135)", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Steady", cue: "Keep heart rate strictly in Zone 2 (talking pace).", videoQuery: "how to do zone 2 cardio properly" },
-              { id: "lba2_2_2", name: "Introductory VO2 Max Surges (Bike or Incline)", targetWeight: "VO2 Max Sprint (>85% HR)", sets: 4, reps: "60s hard / 90s easy", targetReps: 4, unit: "rounds", isStrength: false, tempo: "RPE 8.5", cue: "60s high-intensity sprint effort followed by 90s recovery spin.", videoQuery: "vo2 max sprint interval training" },
-              { id: "lba2_2_3", name: "Box-Supported Elephant Walk (Hands on Box)", targetWeight: "Bodyweight Floss", sets: 3, reps: "35 reps", targetReps: 35, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box. Alternating knee extensions flossing sciatic nerve.", videoQuery: "elephant walk exercise low back ability" },
-              { id: "lba2_2_4", name: "Standing Box-Elevated Psoas Stretch", targetWeight: "Bench/Box Elevation", sets: 3, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Static", cue: "Open hip flexor to alleviate lumbar arch.", videoQuery: "standing rear foot elevated hip flexor stretch" }
-            ]
-          },
-          3: {
-            title: "Full Body B: Trap Bar, 45° Back Extension & Overhead Drive",
-            duration: "45–55 min",
-            focus: "Posterior chain drive, erector strength, pulldowns & carries",
-            exercises: [
-              { id: "lba2_3_1", name: "Trap Bar Deadlift (or Heavy DB Deadlift)", targetWeight: "225–275 lbs", sets: 4, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Drive feet through floor, squeeze glutes at lockout.", videoQuery: "trap bar deadlift form tutorial" },
-              { id: "lba2_3_2", name: "Low Back Ability: 45° Back Extension (Weighted)", targetWeight: "BW + 35 lbs plate", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "On 45° bench. Hold plate at chest, curl & uncurl.", videoQuery: "45 degree back extension low back ability form" },
-              { id: "lba2_3_3", name: "Lat Pulldown or Neutral Grip Pull-Ups", targetWeight: "150 lbs stack / BW", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Lats are primary braking muscle in swing.", videoQuery: "lat pulldown proper form cues" },
-              { id: "lba2_3_4", name: "Standing Overhead DB / Landmine Press", targetWeight: "50 lbs DBs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "2-0-1-0", cue: "Core locked tight, press overhead without lower back arch.", videoQuery: "standing dumbbell overhead press form" },
-              { id: "lba2_3_5", name: "Heavy Suitcase Carry (Single-Arm DB)", targetWeight: "65 lbs DB", sets: 3, reps: "35 paces/side", targetReps: 35, unit: "paces", isStrength: true, tempo: "Braced", cue: "Maximum anti-lateral flexion core activation.", videoQuery: "heavy suitcase carry proper form" }
-            ]
-          },
-          4: {
-            title: "Full Body Agility & Standing Carries (Optional)",
-            duration: "40–45 min",
-            focus: "Standing med ball tosses, Jefferson curls & aerobic flush",
-            exercises: [
-              { id: "lba2_4_1", name: "Standing Med Ball Chest Passes (Wall)", targetWeight: "12–14 lbs Ball", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Explosive", cue: "Push explosively through palms into wall.", videoQuery: "explosive medicine ball chest pass against wall" },
-              { id: "lba2_4_2", name: "Low Back Ability: Standing Jefferson Curl", targetWeight: "35–45 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Slow vertebrae articulation standing on box/floor.", videoQuery: "jefferson curl proper form low back ability" },
-              { id: "lba2_4_3", name: "Heavy Farmer's Walk", targetWeight: "75 lbs DBs", sets: 3, reps: "35 paces", targetReps: 35, unit: "paces", isStrength: true, tempo: "Steady", cue: "Tall posture, no leaning, maximum grip load.", videoQuery: "heavy farmers carry form cues" },
-              { id: "lba2_4_4", name: "Zone 2 Incline Walk / Light Jog", targetWeight: "Zone 2 Active Recovery", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Easy aerobic active recovery.", videoQuery: "zone 2 heart rate training" }
-            ]
-          }
-        }
-      },
-      3: {
-        title: "Month 3: Power & Peak VO2 Max (Full Body LBA)",
-        theme: "Rate of Force Development & Lumbar Security (Off Floor)",
-        desc: "Explosive kettlebell swings, heavy box squats, Seated Good Mornings, and Norwegian 4x4 intervals.",
-        days: {
-          1: {
-            title: "Full Body A: Kettlebell Swings, Box Squat & Bench",
-            duration: "45–55 min",
-            focus: "Hip snap velocity, Seated Good Mornings & heavy pressing",
-            exercises: [
-              { id: "lba3_1", name: "Kettlebell Swings (Hardstyle Standing)", targetWeight: "53–70 lbs KB", sets: 4, reps: "12 reps", targetReps: 12, isStrength: true, tempo: "Explosive", cue: "Standing tall. Sharp hip snap, float kettlebell to chest, brace glutes.", videoQuery: "kettlebell swing hardstyle proper form" },
-              { id: "lba3_2", name: "Low Back Ability: Loaded Seated Good Morning", targetWeight: "55–65 lbs", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "Seated on bench/box. Drive up through adductors and spinal erectors.", videoQuery: "seated good morning low back ability form" },
-              { id: "lba3_3", name: "Incline DB Chest Press (on Bench)", targetWeight: "70 lbs DBs", sets: 3, reps: "6–8 reps", targetReps: 8, isStrength: true, tempo: "2-1-1-0", cue: "Heavy controlled lower, explosive press.", videoQuery: "incline dumbbell bench press heavy form" },
-              { id: "lba3_4", name: "Single-Arm Cable Row w/ Torso Rotation", targetWeight: "65 lbs stack", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Dynamic", cue: "Standing. Rotate torso slightly into row to mimic follow-through.", videoQuery: "single arm rotational cable row form" },
-              { id: "lba3_5", name: "Standing Med Ball Wall Throws", targetWeight: "12–14 lbs Ball", sets: 4, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Max Intent", cue: "Standing in golf posture. Transfer energy from back hip through torso.", videoQuery: "rotational medicine ball scoop toss wall golf" }
-            ]
-          },
-          2: {
-            title: "The Longevity VO2 Max Peak (Norwegian 4×4) + LBA Floss",
-            duration: "45–50 min",
-            focus: "Stroke volume & standing nerve maintenance",
-            exercises: [
-              { id: "lba3_2_1", name: "Warm-Up (Easy Spin / Incline Walk)", targetWeight: "Zone 2 Pace", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Gradual ramp", cue: "Gradually raise heart rate to top of Zone 2.", videoQuery: "how to warm up for vo2 max intervals" },
-              { id: "lba3_2_2", name: "Norwegian 4×4 Protocol (Attia/Patrick)", targetWeight: "HR 160–175 bpm (90-95%)", sets: 4, reps: "4m Work / 3m Rest", targetReps: 4, unit: "intervals", isStrength: false, tempo: "RPE 9.0", cue: "4 min @ 90-95% Max HR on bike or incline treadmill, followed by 3 min easy Zone 1 recovery walk. Repeat 4 total times.", videoQuery: "norwegian 4x4 interval training peter attia" },
-              { id: "lba3_2_3", name: "Box-Supported Elephant Walk (Hands on Box)", targetWeight: "Bodyweight Floss", sets: 3, reps: "40 reps", targetReps: 40, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box. Floss nervous system after intense intervals.", videoQuery: "elephant walk exercise low back ability" },
-              { id: "lba3_2_4", name: "Standing Box-Elevated Psoas Stretch", targetWeight: "Bench/Box Elevation", sets: 2, reps: "90s/side", targetReps: 90, unit: "sec", isStrength: false, tempo: "Static", cue: "Deep psoas decompression standing.", videoQuery: "standing rear foot elevated hip flexor stretch" }
-            ]
-          },
-          3: {
-            title: "Full Body B: Trap Bar, 45° Back Extension & Overhead Drive",
-            duration: "45–55 min",
-            focus: "Torso whip, lateral stabilization & pressing power",
-            exercises: [
-              { id: "lba3_3_1", name: "Heavy Trap Bar Deadlift", targetWeight: "245–295 lbs", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "3-1-1-0", cue: "Push through heels, solid hip lockout at top.", videoQuery: "trap bar deadlift form tutorial" },
-              { id: "lba3_3_2", name: "Low Back Ability: 45° Back Extension (Weighted)", targetWeight: "BW + 45 lbs plate", sets: 4, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "3-1-1-0", cue: "On 45° bench. Erector power, full control at lockout.", videoQuery: "45 degree back extension low back ability form" },
-              { id: "lba3_3_3", name: "Lat Pulldown or Weighted Pull-Ups", targetWeight: "160 lbs stack / BW", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-1-1-0", cue: "Drive elbows down into ribcage.", videoQuery: "lat pulldown proper form cues" },
-              { id: "lba3_3_4", name: "Standing Landmine Push Press", targetWeight: "+55 lbs on Bar", sets: 3, reps: "6 reps/side", targetReps: 6, isStrength: true, tempo: "Explosive", cue: "Standing athletic stance. Punch bar overhead with hip drive.", videoQuery: "landmine push press explosive exercise" },
-              { id: "lba3_3_5", name: "Dumbbell Box Step-Ups (18\" Box)", targetWeight: "45 lbs DBs", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Power", cue: "Explode onto box, full hip extension at top.", videoQuery: "dumbbell step up on box proper form" }
-            ]
-          },
-          4: {
-            title: "Full Body Regeneration & Heavy Carries (Optional)",
-            duration: "45–50 min",
-            focus: "Endurance foundation & lumbar recovery",
-            exercises: [
-              { id: "lba3_4_1", name: "60-Min Zone 2 Trail Run or Incline Ruck", targetWeight: "Zone 2 Trail / Ruck", sets: 1, reps: "50–60 min", targetReps: 60, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Steady, rhythmic aerobic conditioning.", videoQuery: "zone 2 rucking benefits" },
-              { id: "lba3_4_2", name: "Low Back Ability: Standing Jefferson Curl", targetWeight: "40–45 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Standing on box/floor. Slow spinal rolling flexion.", videoQuery: "jefferson curl proper form low back ability" },
-              { id: "lba3_4_3", name: "Heavy Farmer's Walk", targetWeight: "80 lbs DBs", sets: 4, reps: "30 paces", targetReps: 30, unit: "paces", isStrength: true, tempo: "Heavy", cue: "Maximum grip load, tall posture, steady breath.", videoQuery: "heavy farmers carry form cues" },
-              { id: "lba3_4_4", name: "Hanging Spinal Decompression (Pull-Up Bar)", targetWeight: "Bodyweight (45s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from bar, relax shoulders, decompress lumbar discs.", videoQuery: "dead hang for spine health and posture" }
-            ]
-          }
-        }
-      },
-      4: {
-        title: "Month 4: Speed & Peak Integration (Full Body LBA)",
-        theme: "Rotational Speed & Lumbar Bulletproofing (Off Floor)",
-        desc: "Converting structural strength into maximum clubhead speed with 100% off-the-floor safety.",
-        days: {
-          1: {
-            title: "Full Body A: Contrast Power, QL Lock & Med Ball",
-            duration: "45–50 min",
-            focus: "Trap bar to box jump contrast, standing QL & rotational velocity",
-            exercises: [
-              { id: "lba4_1", name: "Heavy Trap Bar Deadlift + Box Jump", targetWeight: "275–315 lbs", sets: 4, reps: "4 reps + 3 box jumps", targetReps: 4, isStrength: true, tempo: "Contrast", cue: "Heavy deadlift followed immediately by landing on 20\" box.", videoQuery: "contrast training trap bar deadlift vertical jump" },
-              { id: "lba4_2", name: "Low Back Ability: Standing DB QL Raise (or 45° Bench)", targetWeight: "40–45 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Strict", cue: "Prevent late-round lower back fatigue and posture collapse.", videoQuery: "ql raise low back ability form brendan backstrom" },
-              { id: "lba4_3", name: "Standing Step-and-Hit Med Ball Throws", targetWeight: "10–12 lbs Ball (Max Intent)", sets: 4, reps: "5 throws/side", targetReps: 5, isStrength: true, tempo: "Max Speed", cue: "Step onto lead foot standing and whip ball into wall.", videoQuery: "step and hit medicine ball rotational throw golf" },
-              { id: "lba4_4", name: "Standing High-to-Low Cable Speed Chops", targetWeight: "40 lbs stack (Speed)", sets: 3, reps: "8 reps/side", targetReps: 8, isStrength: true, tempo: "Fast", cue: "Max rotational acceleration with clean deceleration.", videoQuery: "speed cable woodchop rotational power" },
-              { id: "lba4_5", name: "Heavy Single-Arm Suitcase Carry", targetWeight: "70 lbs DB", sets: 3, reps: "40 paces/side", targetReps: 40, unit: "paces", isStrength: true, tempo: "Solid", cue: "Core bracing under maximum unilateral load.", videoQuery: "heavy suitcase carry form" }
-            ]
-          },
-          2: {
-            title: "Zone 2 & Overspeed Swing Session + Standing Floss",
-            duration: "45–50 min",
-            focus: "Aerobic maintenance & neural swing velocity (Standing)",
-            exercises: [
-              { id: "lba4_2_1", name: "Zone 2 Cardiovascular Base", targetWeight: "Zone 2 Cardio", sets: 1, reps: "35 min", targetReps: 35, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Incline walk or cycling at conversational heart rate.", videoQuery: "peter attia zone 2 training explanation" },
-              { id: "lba4_2_2", name: "Overspeed Swing / Speed Stick Drills", targetWeight: "+8–12 mph Swing Speed", sets: 3, reps: "10 swings each side", targetReps: 10, isStrength: true, tempo: "Max effort", cue: "Standing golf posture. 10 swings dominant, 10 swings non-dominant.", videoQuery: "superspeed golf speed sticks training protocol" },
-              { id: "lba4_2_3", name: "Box-Supported Elephant Walk (Hands on Box)", targetWeight: "Bodyweight Floss", sets: 3, reps: "35 reps", targetReps: 35, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands on box. Floss hamstrings and lumbar fascia.", videoQuery: "elephant walk exercise low back ability" },
-              { id: "lba4_2_4", name: "Standing Box-Elevated Psoas Stretch", targetWeight: "Psoas Bench Release", sets: 2, reps: "60s/side", targetReps: 60, unit: "sec", isStrength: false, tempo: "Static", cue: "Prevent anterior hip tightness after speed swings.", videoQuery: "standing rear foot elevated hip flexor stretch" }
-            ]
-          },
-          3: {
-            title: "Full Body B: Push Press, Lat Power & 45° Back Extension",
-            duration: "45–50 min",
-            focus: "Arm whip speed, lat power & lumbar stability",
-            exercises: [
-              { id: "lba4_3_1", name: "Standing Landmine Push Press (Explosive)", targetWeight: "+60 lbs on Bar", sets: 4, reps: "5 reps/side", targetReps: 5, isStrength: true, tempo: "Explosive", cue: "Dip hips standing and drive barbell forcefully overhead.", videoQuery: "landmine push press explosive exercise" },
-              { id: "lba4_3_2", name: "Weighted Pull-Ups or Heavy Seated Cable Rows", targetWeight: "170 lbs Row / BW+25", sets: 4, reps: "6 reps", targetReps: 6, isStrength: true, tempo: "2-0-1-0", cue: "Strong upper back and lat recruitment.", videoQuery: "seated cable row proper form lat focus" },
-              { id: "lba4_3_3", name: "Low Back Ability: 45° Back Extension (Weighted)", targetWeight: "BW + 45 lbs plate", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "On 45° bench. Erector endurance and glute lockout.", videoQuery: "45 degree back extension low back ability form" },
-              { id: "lba4_3_4", name: "Standing Rotational Med Ball Shot-Put Throws", targetWeight: "12 lbs Ball", sets: 3, reps: "6 throws/side", targetReps: 6, isStrength: true, tempo: "Fast", cue: "Standing. Push through trailing hip, snap wrist at release.", videoQuery: "rotational medicine ball shotput punch golf" },
-              { id: "lba4_3_5", name: "Dumbbell Box Step-Ups with Knee Drive", targetWeight: "40 lbs DBs", sets: 3, reps: "6 reps/leg", targetReps: 6, isStrength: true, tempo: "Fast", cue: "Step onto 18\" box, drive opposite knee high at top.", videoQuery: "explosive dumbbell step up with knee drive" }
-            ]
-          },
-          4: {
-            title: "Mastery Aerobic Flush & Standing LBA Decompression",
-            duration: "45 min",
-            focus: "Final recovery, lumbar restoration & vitality (Off Floor)",
-            exercises: [
-              { id: "lba4_4_1", name: "Outdoor Aerobic Walk / Nature Ruck", targetWeight: "Zone 2 Nature Walk", sets: 1, reps: "30 min", targetReps: 30, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Mindful recovery walk in morning light.", videoQuery: "zone 2 rucking benefits" },
-              { id: "lba4_4_2", name: "Low Back Ability: Bench-Seated Good Morning", targetWeight: "55–65 lbs", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "Smooth", cue: "Seated on bench/box. Adductor opening and hip hinge mastery.", videoQuery: "seated good morning low back ability form" },
-              { id: "lba4_4_3", name: "Low Back Ability: Standing QL Raise", targetWeight: "40–45 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "Strict", cue: "Standing lateral flexion for bulletproof stability.", videoQuery: "ql raise low back ability form brendan backstrom" },
-              { id: "lba4_4_4", name: "Low Back Ability: Standing Jefferson Curl", targetWeight: "40–50 lbs DB", sets: 3, reps: "8 reps", targetReps: 8, isStrength: true, tempo: "Slow", cue: "Standing on box/floor. Spinal segmentation and hamstring length.", videoQuery: "jefferson curl proper form low back ability" },
-              { id: "lba4_4_5", name: "Hanging Spinal Decompression (Pull-Up Bar)", targetWeight: "Bodyweight (45-60s Hang)", sets: 3, reps: "45s", targetReps: 45, unit: "sec", isStrength: false, tempo: "Passive hang", cue: "Hang from pull-up bar, relax shoulders, decompress lumbar discs.", videoQuery: "dead hang for spine health and posture" }
-            ]
-          }
-        }
-      }
-    };
-
-    // ==========================================
-    // 1C. TRAVEL PRESETS (100% OFF-THE-FLOOR)
-    // ==========================================
-    const TRAVEL_PRESETS = {
-      run60: {
-        title: "Travel: 60-Minute Outdoor Road Run",
-        duration: "60 min",
-        focus: "Zone 2 Base + VO2 Max Hill Surges",
-        exercises: [
-          { id: "tr_run1", name: "Steady Zone 2 Road / Trail Run", targetWeight: "Zone 2 (Conversational)", sets: 1, reps: "35–40 min", targetReps: 40, unit: "mins", isStrength: false, tempo: "Zone 2", cue: "Strict conversational pace (HR 65–75% max). Slow to walk on steep hills if needed.", videoQuery: "zone 2 running conversational pace guide" },
-          { id: "tr_run2", name: "VO2 Max Uphill Surges / Sprints", targetWeight: "Max Uphill Sprint", sets: 5, reps: "1m Hard / 2m Jog", targetReps: 5, unit: "hills", isStrength: false, tempo: "RPE 9.0", cue: "Find an incline: 1 min hard surge followed by 2 min easy jog recovery.", videoQuery: "hill sprint intervals for vo2 max" },
-          { id: "tr_run3", name: "Standing Box/Bench Pigeon & T-Spine Cool-Down", targetWeight: "Park Bench / Curbside", sets: 1, reps: "10 min", targetReps: 10, unit: "mins", isStrength: false, tempo: "Down-regulate", cue: "Standing leg on bench hip opener and walking breath resets.", videoQuery: "standing pigeon stretch on bench box" }
-        ]
-      },
-      hotelGym: {
-        title: "Travel: Hotel Gym Full Body Dumbbells (Off Floor)",
-        duration: "45 min",
-        focus: "Full-Body Strength & Conditioning (Dumbbells + Bench/Box)",
-        exercises: [
-          { id: "tr_hg1", name: "Goblet Box Squats (to Bench/Chair)", targetWeight: "50–60 lbs DB", sets: 4, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Sit back to bench, keep torso upright, drive through heels.", videoQuery: "goblet box squat proper form tutorial" },
-          { id: "tr_hg2", name: "Dumbbell Flat or Incline Bench Press", targetWeight: "55–65 lbs DBs", sets: 4, reps: "8–10 reps", targetReps: 10, isStrength: true, tempo: "2-0-1-0", cue: "Lying on bench. Solid chest stretch, punch dumbbells to ceiling.", videoQuery: "dumbbell bench press proper form" },
-          { id: "tr_hg3", name: "Single-Arm Dumbbell Row (Hand on Bench)", targetWeight: "55–65 lbs DB", sets: 3, reps: "10 reps/side", targetReps: 10, isStrength: true, tempo: "2-1-1-0", cue: "Braced on bench. Pull DB toward hip pocket, pause at top.", videoQuery: "single arm dumbbell row proper form" },
-          { id: "tr_hg4", name: "Dumbbell Romanian Deadlift (RDL)", targetWeight: "50–60 lbs DBs", sets: 3, reps: "10 reps", targetReps: 10, isStrength: true, tempo: "3-0-1-0", cue: "Standing tall. Hinge hips back, feel hamstrings load, snap tall.", videoQuery: "dumbbell romanian deadlift proper form" },
-          { id: "tr_hg5", name: "Standing Heavy Suitcase Carry", targetWeight: "50–60 lbs DB", sets: 3, reps: "30 paces/side", targetReps: 30, unit: "paces", isStrength: true, tempo: "Upright", cue: "Single DB at side. Walk completely upright with zero lateral lean.", videoQuery: "heavy suitcase carry proper form" }
-        ]
-      },
-      hotelRoom: {
-        title: "Travel: Hotel Room Standing Bodyweight (Off Floor)",
-        duration: "30 min",
-        focus: "High-Density Standing Circuit (Bed/Chair Supported, No Floor Mats)",
-        exercises: [
-          { id: "tr_hr1", name: "Chair / Bed-Supported Single-Leg Step-Ups", targetWeight: "Bodyweight", sets: 4, reps: "12 reps/leg", targetReps: 12, isStrength: true, tempo: "2-0-1-0", cue: "Step onto sturdy hotel chair or bed frame, drive through heel.", videoQuery: "step ups on chair or bench form" },
-          { id: "tr_hr2", name: "Incline Push-Ups (Hands on Desk or Bed Frame)", targetWeight: "Bodyweight Incline", sets: 4, reps: "12–15 reps", targetReps: 15, isStrength: true, tempo: "2-1-1-0", cue: "Hands on desk or sturdy bed frame. Keep rigid plank line, no touching the floor.", videoQuery: "incline push ups on desk or bench" },
-          { id: "tr_hr3", name: "Doorframe / Bed-Supported Single-Leg RDLs", targetWeight: "Bodyweight Balance", sets: 3, reps: "10 reps/leg", targetReps: 10, isStrength: true, tempo: "3-1-1-0", cue: "Light hand on doorframe for balance. Hinge back, squeeze glute at top.", videoQuery: "single leg rdl bodyweight balance form" },
-          { id: "tr_hr4", name: "Standing Golf Posture Thoracic Rotations", targetWeight: "Bodyweight / Towel", sets: 3, reps: "12 reps/side", targetReps: 12, isStrength: false, tempo: "Controlled", cue: "Cross arms over chest in golf stance. Rotate shoulders fully while keeping hips steady.", videoQuery: "standing golf posture thoracic rotation club" },
-          { id: "tr_hr5", name: "Standing Wall-Supported Sciatic Floss / Elephant Walk", targetWeight: "Bodyweight Floss", sets: 3, reps: "30 pumps", targetReps: 30, unit: "pumps", isStrength: false, tempo: "Rhythmic", cue: "Hands against wall or desk at hip height. Alternating knee pumps flossing hamstrings.", videoQuery: "elephant walk exercise low back ability" }
-        ]
-      }
-    };
     function getActiveMonthsData() {
-      return (state.activeTrack === 'low_back_ability') ? MONTHS_DATA_LBA : MONTHS_DATA_STANDARD;
+      return MONTHS_DATA;
     }
 
     // TRAVEL WORKOUT PRESETS
@@ -1084,8 +798,7 @@
       curMonth: 1,
       curWeek: 1,
       curDay: 1,
-      activeTrack: "low_back_ability",
-      activeTravelPreset: null,
+            activeTravelPreset: null,
       completedWorkouts: {},
       setDetails: {},          // key: `${workoutKey}_${ex.id}_set_${s}` -> { weight: "45", reps: 10, completed: true }
       completedWarmup: {},     // key: `${workoutKey}_w_${item.id}`: true
@@ -1119,30 +832,7 @@
       }
     }
 
-    function toggleProgramTrack() {
-      state.activeTrack = (state.activeTrack === 'low_back_ability') ? 'standard' : 'low_back_ability';
-      saveState();
-      updateTrackUI();
-      renderCurrentWorkout();
-      renderProgramOverview();
-      showToast(state.activeTrack === 'low_back_ability' ? "Switched to Low Back Ability Track! 🛡️" : "Switched to Original Program! ⛳");
-    }
-
-    function updateTrackUI() {
-      const badge = document.getElementById('trackNameBadge');
-      const btnText = document.getElementById('toggleTrackBtnText');
-      if (!badge || !btnText) return;
-      if (state.activeTrack === 'low_back_ability') {
-        badge.textContent = "Low Back Ability Hybrid";
-        badge.className = "text-[11px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/50";
-        btnText.textContent = "Switch to Original";
-      } else {
-        badge.textContent = "Original Longevity & Golf";
-        badge.className = "text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/50";
-        btnText.textContent = "Switch to Low Back";
-      }
-      lucide.createIcons();
-    }
+    
 
     function getTodayKey() {
       const d = new Date();
@@ -1800,8 +1490,7 @@
     // ==========================================
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
-      updateTrackUI();
-      renderCurrentWorkout();
+            renderCurrentWorkout();
       updateGoogleSheetIndicator();
       lucide.createIcons();
     });
