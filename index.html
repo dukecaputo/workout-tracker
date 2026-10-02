@@ -134,7 +134,38 @@
 
       <!-- Month & Week & Day Picker Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-        
+        <!-- Month Selector Pills -->
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Phase / Month</span>
+          <span id="monthThemeLabel" class="text-xs font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/40">
+            Anatomical Adaptation
+          </span>
+        </div>
+        <div class="grid grid-cols-4 gap-1.5">
+          <button onclick="selectMonth(1)" id="mBtn-1" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm">M1: Base</button>
+          <button onclick="selectMonth(2)" id="mBtn-2" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M2: Build</button>
+          <button onclick="selectMonth(3)" id="mBtn-3" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M3: Peak</button>
+          <button onclick="selectMonth(4)" id="mBtn-4" class="month-btn py-2 text-xs font-bold rounded-xl border transition-all bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600">M4: Speed</button>
+        </div>
+
+        <!-- Week & Day Selector -->
+        <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
+          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <span class="text-[10px] text-slate-400 px-1 font-semibold uppercase">Wk</span>
+            <button onclick="selectWeek(1)" id="wBtn-1" class="week-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-500 text-slate-950">1</button>
+            <button onclick="selectWeek(2)" id="wBtn-2" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">2</button>
+            <button onclick="selectWeek(3)" id="wBtn-3" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">3</button>
+            <button onclick="selectWeek(4)" id="wBtn-4" class="week-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">4</button>
+          </div>
+
+          <!-- Day Selection -->
+          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <button onclick="selectDay(1)" id="dBtn-1" class="day-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-500 text-slate-950">D1</button>
+            <button onclick="selectDay(2)" id="dBtn-2" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D2</button>
+            <button onclick="selectDay(3)" id="dBtn-3" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D3</button>
+            <button onclick="selectDay(4)" id="dBtn-4" class="day-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white">D4</button>
+          </div>
+        </div>
       </div>
 
       <!-- Current Workout Header & Summary Card -->
